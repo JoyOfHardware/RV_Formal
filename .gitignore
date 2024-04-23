@@ -1,4 +1,5 @@
 stack.yaml.lock
+src/Main
 out/
 odir/
 hidir/
