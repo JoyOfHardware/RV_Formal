@@ -9,6 +9,9 @@ import Control.Monad.State
 
 import Clash.Sized.Vector (Vec(..))
 import Clash.Sized.BitVector (BitVector)
+import Opcodes(Opcode)
+
+-- decode :: Unsigned 32 -> Opcode
 
 -- currently memory is only 8 words deep
 someMem :: [Unsigned 32]
