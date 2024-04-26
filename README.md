@@ -1,3 +1,9 @@
+# About
+A formal golden reference model for the POWER 3.0B ISA implemented in 
+Clash Haskell.
+
+[Link](https://wiki.raptorcs.com/w/images/c/cb/PowerISA_public.v3.0B.pdf) to the POWER 3.0 ISA PDF Spec.
+
 # Getting Started
 This works with ghc 9.4.8
 

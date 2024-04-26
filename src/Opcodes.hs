@@ -5,935 +5,935 @@ module Opcodes(Opcode(..)) where
 import Clash.Prelude
 
 data Opcode 
-  = FmaddDot                -- page PAGE
+  = FmaddDot                -- page 157
   | FmaddsDot               -- page 157
-  | FmsubDot                -- page 157
+  | FmsubDot                -- page 158
   | FmsubsDot               -- page 158
   | FnmaddDot               -- page 158
   | FnmaddsDot              -- page 158
   | FnmsubDot               -- page 158
   | FnmsubsDot              -- page 158
-  | DaddDot                 -- page 158
-  | DcffixDot               -- page 193
-  | DctdpDot                -- page 215
-  | DctfixDot               -- page 213
+  | DaddDot                 -- page 193
+  | DcffixDot               -- page 215
+  | DctdpDot                -- page 213
+  | DctfixDot               -- page 215
   | DctfixqDot              -- page 215
-  | DdivDot                 -- page 215
-  | DenbcdDot               -- page 196
-  | DmulDot                 -- page 217
-  | DquaDot                 -- page 195
-  | DquaiDot                -- page 204
-  | DrintnDot               -- page 203
-  | DrintxDot               -- page 211
-  | DrrndDot                -- page 209
-  | DrspDot                 -- page 206
-  | DsubDot                 -- page 214
-  | FaddDot                 -- page 193
+  | DdivDot                 -- page 196
+  | DenbcdDot               -- page 217
+  | DmulDot                 -- page 195
+  | DquaDot                 -- page 204
+  | DquaiDot                -- page 203
+  | DrintnDot               -- page 211
+  | DrintxDot               -- page 209
+  | DrrndDot                -- page 206
+  | DrspDot                 -- page 214
+  | DsubDot                 -- page 193
+  | FaddDot                 -- page 152
   | FaddsDot                -- page 152
-  | FcfidDot                -- page 152
-  | FcfidsDot               -- page 163
+  | FcfidDot                -- page 163
+  | FcfidsDot               -- page 164
   | FcfiduDot               -- page 164
-  | FcfidusDot              -- page 164
-  | FctidDot                -- page 165
-  | FctiduDot               -- page 159
-  | FctiduzDot              -- page 160
-  | FctidzDot               -- page 161
-  | FctiwDot                -- page 160
-  | FctiwuDot               -- page 161
-  | FctiwuzDot              -- page 162
-  | FctiwzDot               -- page 163
-  | FdivDot                 -- page 162
+  | FcfidusDot              -- page 165
+  | FctidDot                -- page 159
+  | FctiduDot               -- page 160
+  | FctiduzDot              -- page 161
+  | FctidzDot               -- page 160
+  | FctiwDot                -- page 161
+  | FctiwuDot               -- page 162
+  | FctiwuzDot              -- page 163
+  | FctiwzDot               -- page 162
+  | FdivDot                 -- page 153
   | FdivsDot                -- page 153
   | FmulDot                 -- page 153
-  | FreDot                  -- page 153
+  | FreDot                  -- page 154
   | FresDot                 -- page 154
-  | FrimDot                 -- page 154
+  | FrimDot                 -- page 166
   | FrinDot                 -- page 166
   | FripDot                 -- page 166
   | FrizDot                 -- page 166
-  | FrspDot                 -- page 166
-  | FrsqrteDot              -- page 159
+  | FrspDot                 -- page 159
+  | FrsqrteDot              -- page 155
   | FrsqrtesDot             -- page 155
-  | FsqrtDot                -- page 155
+  | FsqrtDot                -- page 154
   | FsqrtsDot               -- page 154
-  | FsubDot                 -- page 154
+  | FsubDot                 -- page 152
   | FsubsDot                -- page 152
-  | DaddqDot                -- page 152
-  | DdivqDot                -- page 193
-  | DmulqDot                -- page 196
-  | DsubqDot                -- page 195
-  | DquaqDot                -- page 193
-  | DcffixqDot              -- page 204
-  | DctqpqDot               -- page 215
-  | DenbcdqDot              -- page 213
-  | DquaiqDot               -- page 217
-  | DrdpqDot                -- page 203
-  | DrintnqDot              -- page 214
-  | DrintxqDot              -- page 211
-  | DrrndqDot               -- page 209
-  | TbeginDot               -- page 206
-  | TabortdcDot             -- page 890
-  | TabortwcDot             -- page 894
-  | TabortDot               -- page 893
-  | TabortdciDot            -- page 892
-  | TabortwciDot            -- page 894
-  | TreclaimDot             -- page 893
-  | Sc                      -- page 969
+  | DaddqDot                -- page 193
+  | DdivqDot                -- page 196
+  | DmulqDot                -- page 195
+  | DsubqDot                -- page 193
+  | DquaqDot                -- page 204
+  | DcffixqDot              -- page 215
+  | DctqpqDot               -- page 213
+  | DenbcdqDot              -- page 217
+  | DquaiqDot               -- page 203
+  | DrdpqDot                -- page 214
+  | DrintnqDot              -- page 211
+  | DrintxqDot              -- page 209
+  | DrrndqDot               -- page 206
+  | TbeginDot               -- page 890
+  | TabortdcDot             -- page 894
+  | TabortwcDot             -- page 893
+  | TabortDot               -- page 892
+  | TabortdciDot            -- page 894
+  | TabortwciDot            -- page 893
+  | TreclaimDot             -- page 969
+  | Sc                      -- page 42
   | Scv                     -- page 42
-  | Mtspr                   -- page 42
-  | Dcmpoq                  -- page 117 974
-  | Dcmpuq                  -- page 199
-  | Dtstexq                 -- page 198
-  | Stfdpx                  -- page 201
-  | XsaddqpFlagO            -- page 149
-  | Xscmpeqdp               -- page 520
-  | Xscmpgedp               -- page 524
-  | Xscmpgtdp               -- page 525
-  | Xscmpoqp                -- page 526
-  | XsdivqpFlagO            -- page 529
-  | Xsmaddadp               -- page 564
-  | Xsmaddasp               -- page 570
-  | Xsmaddmdp               -- page 573
-  | Xsmaddmsp               -- page 570
-  | Xsmaxcdp                -- page 573
-  | Xsmaxjdp                -- page 581
-  | Xsmincdp                -- page 583
-  | Xsminjdp                -- page 587
-  | Xsmsubadp               -- page 589
-  | Xsmsubasp               -- page 591
-  | Xsmsubmdp               -- page 594
-  | Xsmsubmsp               -- page 591
-  | XsmulqpFlagO            -- page 594
-  | Xsnmaddadp              -- page 602
-  | Xsnmaddasp              -- page 608
-  | Xsnmaddmdp              -- page 613
-  | Xsnmaddmsp              -- page 608
-  | Xsnmsubadp              -- page 613
-  | Xsnmsubasp              -- page 619
-  | Xsnmsubmdp              -- page 622
-  | Xsnmsubmsp              -- page 619
-  | XssubqpFlagO            -- page 622
-  | Xvmaddadp               -- page 647
-  | Xvmaddasp               -- page 701
+  | Mtspr                   -- page 117 974
+  | Dcmpoq                  -- page 199
+  | Dcmpuq                  -- page 198
+  | Dtstexq                 -- page 201
+  | Stfdpx                  -- page 149
+  | XsaddqpFlagO            -- page 520
+  | Xscmpeqdp               -- page 524
+  | Xscmpgedp               -- page 525
+  | Xscmpgtdp               -- page 526
+  | Xscmpoqp                -- page 529
+  | XsdivqpFlagO            -- page 564
+  | Xsmaddadp               -- page 570
+  | Xsmaddasp               -- page 573
+  | Xsmaddmdp               -- page 570
+  | Xsmaddmsp               -- page 573
+  | Xsmaxcdp                -- page 581
+  | Xsmaxjdp                -- page 583
+  | Xsmincdp                -- page 587
+  | Xsminjdp                -- page 589
+  | Xsmsubadp               -- page 591
+  | Xsmsubasp               -- page 594
+  | Xsmsubmdp               -- page 591
+  | Xsmsubmsp               -- page 594
+  | XsmulqpFlagO            -- page 602
+  | Xsnmaddadp              -- page 608
+  | Xsnmaddasp              -- page 613
+  | Xsnmaddmdp              -- page 608
+  | Xsnmaddmsp              -- page 613
+  | Xsnmsubadp              -- page 619
+  | Xsnmsubasp              -- page 622
+  | Xsnmsubmdp              -- page 619
+  | Xsnmsubmsp              -- page 622
+  | XssubqpFlagO            -- page 647
+  | Xvmaddadp               -- page 701
+  | Xvmaddasp               -- page 704
   | Xvmaddmsp               -- page 704
-  | Xvmsubadp               -- page 704
-  | Xvmsubasp               -- page 715
-  | Xvmsubmdp               -- page 718
-  | Xvnmaddadp              -- page 715
-  | Xvnmaddasp              -- page 727
-  | Xvnmaddmdp              -- page 732
-  | Xvnmaddmsp              -- page 727
-  | Xvnmsubadp              -- page 732
-  | Xvnmsubasp              -- page 735
-  | Xvnmsubmdp              -- page 738
-  | Xvnmsubmsp              -- page 735
-  | StqcxDot                -- page 738
-  | Slbieg                  -- page 872
-  | Tlbie                   -- page 1025
-  | XsmaddqpFlagO           -- page 1034
-  | XsmsubqpFlagO           -- page 576
-  | XsnmaddqpFlagO          -- page 597
-  | XsnmsubqpFlagO          -- page 616
-  | Stxsdx                  -- page 625
-  | Stxsibx                 -- page 498
+  | Xvmsubadp               -- page 715
+  | Xvmsubasp               -- page 718
+  | Xvmsubmdp               -- page 715
+  | Xvnmaddadp              -- page 727
+  | Xvnmaddasp              -- page 732
+  | Xvnmaddmdp              -- page 727
+  | Xvnmaddmsp              -- page 732
+  | Xvnmsubadp              -- page 735
+  | Xvnmsubasp              -- page 738
+  | Xvnmsubmdp              -- page 735
+  | Xvnmsubmsp              -- page 738
+  | StqcxDot                -- page 872
+  | Slbieg                  -- page 1025
+  | Tlbie                   -- page 1034
+  | XsmaddqpFlagO           -- page 576
+  | XsmsubqpFlagO           -- page 597
+  | XsnmaddqpFlagO          -- page 616
+  | XsnmsubqpFlagO          -- page 625
+  | Stxsdx                  -- page 498
+  | Stxsibx                 -- page 499
   | Stxsihx                 -- page 499
-  | Stxsiwx                 -- page 499
-  | Stxsspx                 -- page 500
-  | Stxvb16x                -- page 502
-  | Stxvd2x                 -- page 503
-  | Stxvh8x                 -- page 504
-  | Stxvl                   -- page 505
-  | Stxvll                  -- page 507
-  | Stxvw4x                 -- page 509
-  | Stxvx                   -- page 506
-  | Vaddecuq                -- page 510
+  | Stxsiwx                 -- page 500
+  | Stxsspx                 -- page 502
+  | Stxvb16x                -- page 503
+  | Stxvd2x                 -- page 504
+  | Stxvh8x                 -- page 505
+  | Stxvl                   -- page 507
+  | Stxvll                  -- page 509
+  | Stxvw4x                 -- page 506
+  | Stxvx                   -- page 510
+  | Vaddecuq                -- page 273
   | Vaddeuqm                -- page 273
-  | Vperm                   -- page 273
+  | Vperm                   -- page 260
   | Vpermr                  -- page 260
-  | Vsel                    -- page 260
-  | Vsubecuq                -- page 261
+  | Vsel                    -- page 261
+  | Vsubecuq                -- page 279
   | Vsubeuqm                -- page 279
-  | Xxperm                  -- page 279
+  | Xxperm                  -- page 772
   | Xxpermr                 -- page 772
-  | Xxsel                   -- page 772
-  | StbcxDot                -- page 773
-  | StdcxDot                -- page 866
-  | SthcxDot                -- page 869
-  | Stswx                   -- page 867
-  | StwcxDot                -- page 65
-  | AddFlagODot             -- page 868
-  | AddcFlagODot            -- page 69
-  | AddeFlagODot            -- page 70
-  | Addex                   -- page 71
-  | Addg6s                  -- page 72
-  | Addi                    -- page 111
-  | Addic                   -- page 67
+  | Xxsel                   -- page 773
+  | StbcxDot                -- page 866
+  | StdcxDot                -- page 869
+  | SthcxDot                -- page 867
+  | Stswx                   -- page 65
+  | StwcxDot                -- page 868
+  | AddFlagODot             -- page 69
+  | AddcFlagODot            -- page 70
+  | AddeFlagODot            -- page 71
+  | Addex                   -- page 72
+  | Addg6s                  -- page 111
+  | Addi                    -- page 67
+  | Addic                   -- page 69
   | AddicDot                -- page 69
-  | Addis                   -- page 69
-  | AddmeFlagODot           -- page 67
-  | Addpcis                 -- page 71
-  | AddzeFlagODot           -- page 68
-  | AndDot                  -- page 72
-  | AndcDot                 -- page 94
-  | AndiDot                 -- page 95
+  | Addis                   -- page 67
+  | AddmeFlagODot           -- page 71
+  | Addpcis                 -- page 68
+  | AddzeFlagODot           -- page 72
+  | AndDot                  -- page 94
+  | AndcDot                 -- page 95
+  | AndiDot                 -- page 92
   | AndisDot                -- page 92
-  | BFlagLinkFlagAbosolute  -- page 92
+  | BFlagLinkFlagAbosolute  -- page 37
   | BcFlagLinkFlagAbosolute -- page 37
-  | BcctrFlagLink           -- page 37
-  | BcdaddDot               -- page 38
-  | BcdcfnDot               -- page 348
-  | BcdcfsqDot              -- page 350
-  | BcdcfzDot               -- page 354
-  | BcdcpsgnDot             -- page 351
-  | BcdctnDot               -- page 356
-  | BcdctsqDot              -- page 352
-  | BcdctzDot               -- page 354
-  | BcdsDot                 -- page 353
-  | BcdsetsgnDot            -- page 357
-  | BcdsrDot                -- page 356
-  | BcdsubDot               -- page 359
-  | BcdtruncDot             -- page 348
-  | BcdusDot                -- page 360
-  | BcdutruncDot            -- page 358
-  | BclrFlagLink            -- page 361
-  | BctarFlagLink           -- page 38
-  | Bpermd                  -- page 39
-  | Cbcdtd                  -- page 100
+  | BcctrFlagLink           -- page 38
+  | BcdaddDot               -- page 348
+  | BcdcfnDot               -- page 350
+  | BcdcfsqDot              -- page 354
+  | BcdcfzDot               -- page 351
+  | BcdcpsgnDot             -- page 356
+  | BcdctnDot               -- page 352
+  | BcdctsqDot              -- page 354
+  | BcdctzDot               -- page 353
+  | BcdsDot                 -- page 357
+  | BcdsetsgnDot            -- page 356
+  | BcdsrDot                -- page 359
+  | BcdsubDot               -- page 348
+  | BcdtruncDot             -- page 360
+  | BcdusDot                -- page 358
+  | BcdutruncDot            -- page 361
+  | BclrFlagLink            -- page 38
+  | BctarFlagLink           -- page 39
+  | Bpermd                  -- page 100
+  | Cbcdtd                  -- page 111
   | Cdtbcd                  -- page 111
-  | Clrbhrb                 -- page 111
-  | Cmp                     -- page 909
-  | Cmpb                    -- page 85
-  | Cmpeqb                  -- page 97
-  | Cmpi                    -- page 88
-  | Cmpl                    -- page 85
+  | Clrbhrb                 -- page 909
+  | Cmp                     -- page 85
+  | Cmpb                    -- page 97
+  | Cmpeqb                  -- page 88
+  | Cmpi                    -- page 85
+  | Cmpl                    -- page 86
   | Cmpli                   -- page 86
-  | Cmprb                   -- page 86
-  | CntlzdDot               -- page 87
-  | CntlzwDot               -- page 99
-  | CnttzdDot               -- page 96
-  | CnttzwDot               -- page 99
-  | Copy                    -- page 96
-  | Cpabort                 -- page 855
-  | Crand                   -- page 856
-  | Crandc                  -- page 40
+  | Cmprb                   -- page 87
+  | CntlzdDot               -- page 99
+  | CntlzwDot               -- page 96
+  | CnttzdDot               -- page 99
+  | CnttzwDot               -- page 96
+  | Copy                    -- page 855
+  | Cpabort                 -- page 856
+  | Crand                   -- page 40
+  | Crandc                  -- page 41
   | Creqv                   -- page 41
-  | Crnand                  -- page 41
-  | Crnor                   -- page 40
-  | Cror                    -- page 41
-  | Crorc                   -- page 40
-  | Crxor                   -- page 41
-  | Darn                    -- page 40
-  | Dcbf                    -- page 78
-  | Dcbst                   -- page 852
-  | Dcbt                    -- page 851
-  | Dcbtst                  -- page 849
-  | Dcbz                    -- page 850
-  | Dcmpo                   -- page 851
-  | Dcmpu                   -- page 199
-  | DdedpdDot               -- page 198
+  | Crnand                  -- page 40
+  | Crnor                   -- page 41
+  | Cror                    -- page 40
+  | Crorc                   -- page 41
+  | Crxor                   -- page 40
+  | Darn                    -- page 78
+  | Dcbf                    -- page 852
+  | Dcbst                   -- page 851
+  | Dcbt                    -- page 849
+  | Dcbtst                  -- page 850
+  | Dcbz                    -- page 851
+  | Dcmpo                   -- page 199
+  | Dcmpu                   -- page 198
+  | DdedpdDot               -- page 217
   | DdedpdqDot              -- page 217
-  | DiexDot                 -- page 217
+  | DiexDot                 -- page 218
   | DiexqDot                -- page 218
-  | DivdFlagODot            -- page 218
-  | DivdeFlagODot           -- page 81
+  | DivdFlagODot            -- page 81
+  | DivdeFlagODot           -- page 82
   | DivdeuFlagODot          -- page 82
-  | DivduFlagODot           -- page 82
-  | DivwFlagODot            -- page 81
-  | DivweFlagODot           -- page 74
+  | DivduFlagODot           -- page 81
+  | DivwFlagODot            -- page 74
+  | DivweFlagODot           -- page 75
   | DivweuFlagODot          -- page 75
-  | DivwuFlagODot           -- page 75
-  | DscliDot                -- page 74
+  | DivwuFlagODot           -- page 74
+  | DscliDot                -- page 220
   | DscliqDot               -- page 220
   | DscriDot                -- page 220
   | DscriqDot               -- page 220
-  | Dtstdc                  -- page 220
+  | Dtstdc                  -- page 200
   | Dtstdcq                 -- page 200
   | Dtstdg                  -- page 200
   | Dtstdgq                 -- page 200
-  | Dtstex                  -- page 200
-  | Dtstsf                  -- page 201
+  | Dtstex                  -- page 201
+  | Dtstsf                  -- page 202
   | Dtstsfi                 -- page 202
   | Dtstsfiq                -- page 202
   | Dtstsfq                 -- page 202
-  | DxexDot                 -- page 202
+  | DxexDot                 -- page 218
   | DxexqDot                -- page 218
-  | Eieio                   -- page 218
-  | EqvDot                  -- page 875
-  | ExtsbDot                -- page 95
+  | Eieio                   -- page 875
+  | EqvDot                  -- page 95
+  | ExtsbDot                -- page 96
   | ExtshDot                -- page 96
-  | ExtswDot                -- page 96
-  | ExtswsliDot             -- page 99
-  | FabsDot                 -- page 110
-  | Fcmpo                   -- page 150
+  | ExtswDot                -- page 99
+  | ExtswsliDot             -- page 110
+  | FabsDot                 -- page 150
+  | Fcmpo                   -- page 167
   | Fcmpu                   -- page 167
-  | FcpsgnDot               -- page 167
+  | FcpsgnDot               -- page 150
   | FmrDot                  -- page 150
-  | Fmrgew                  -- page 150
+  | Fmrgew                  -- page 151
   | Fmrgow                  -- page 151
-  | FmulsDot                -- page 151
-  | FnabsDot                -- page 153
+  | FmulsDot                -- page 153
+  | FnabsDot                -- page 150
   | FnegDot                 -- page 150
-  | FselDot                 -- page 150
-  | Ftdiv                   -- page 168
+  | FselDot                 -- page 168
+  | Ftdiv                   -- page 156
   | Ftsqrt                  -- page 156
-  | Hrfid                   -- page 156
-  | Icbi                    -- page 956
+  | Hrfid                   -- page 956
+  | Icbi                    -- page 840
   | Icbt                    -- page 840
-  | Isel                    -- page 840
-  | Isync                   -- page 91
-  | Lbarx                   -- page 863
-  | Lbz                     -- page 864
-  | Lbzcix                  -- page 48
-  | Lbzu                    -- page 966
+  | Isel                    -- page 91
+  | Isync                   -- page 863
+  | Lbarx                   -- page 864
+  | Lbz                     -- page 48
+  | Lbzcix                  -- page 966
+  | Lbzu                    -- page 48
   | Lbzux                   -- page 48
   | Lbzx                    -- page 48
-  | Ld                      -- page 48
-  | Ldarx                   -- page 53
-  | Ldat                    -- page 869
-  | Ldbrx                   -- page 860
-  | Ldcix                   -- page 61
-  | Ldu                     -- page 966
+  | Ld                      -- page 53
+  | Ldarx                   -- page 869
+  | Ldat                    -- page 860
+  | Ldbrx                   -- page 61
+  | Ldcix                   -- page 966
+  | Ldu                     -- page 53
   | Ldux                    -- page 53
   | Ldx                     -- page 53
-  | Lfd                     -- page 53
-  | Lfdp                    -- page 142
+  | Lfd                     -- page 142
+  | Lfdp                    -- page 149
   | Lfdpx                   -- page 149
-  | Lfdu                    -- page 149
-  | Lfdux                   -- page 142
-  | Lfdx                    -- page 143
-  | Lfiwax                  -- page 142
+  | Lfdu                    -- page 142
+  | Lfdux                   -- page 143
+  | Lfdx                    -- page 142
+  | Lfiwax                  -- page 143
   | Lfiwzx                  -- page 143
-  | Lfs                     -- page 143
-  | Lfsu                    -- page 140
-  | Lfsux                   -- page 141
-  | Lfsx                    -- page 142
-  | Lha                     -- page 141
-  | Lharx                   -- page 50
-  | Lhau                    -- page 865
+  | Lfs                     -- page 140
+  | Lfsu                    -- page 141
+  | Lfsux                   -- page 142
+  | Lfsx                    -- page 141
+  | Lha                     -- page 50
+  | Lharx                   -- page 865
+  | Lhau                    -- page 50
   | Lhaux                   -- page 50
   | Lhax                    -- page 50
-  | Lhbrx                   -- page 50
-  | Lhz                     -- page 60
-  | Lhzcix                  -- page 49
-  | Lhzu                    -- page 966
+  | Lhbrx                   -- page 60
+  | Lhz                     -- page 49
+  | Lhzcix                  -- page 966
+  | Lhzu                    -- page 49
   | Lhzux                   -- page 49
   | Lhzx                    -- page 49
-  | Lmw                     -- page 49
-  | Lq                      -- page 62
-  | Lqarx                   -- page 58
-  | Lswi                    -- page 871
+  | Lmw                     -- page 62
+  | Lq                      -- page 58
+  | Lqarx                   -- page 871
+  | Lswi                    -- page 64
   | Lswx                    -- page 64
-  | Lvebx                   -- page 64
+  | Lvebx                   -- page 242
   | Lvehx                   -- page 242
-  | Lvewx                   -- page 242
-  | Lvsl                    -- page 243
+  | Lvewx                   -- page 243
+  | Lvsl                    -- page 247
   | Lvsr                    -- page 247
-  | Lvx                     -- page 247
+  | Lvx                     -- page 243
   | Lvxl                    -- page 243
-  | Lwa                     -- page 243
-  | Lwarx                   -- page 52
-  | Lwat                    -- page 865
-  | Lwaux                   -- page 860
+  | Lwa                     -- page 52
+  | Lwarx                   -- page 865
+  | Lwat                    -- page 860
+  | Lwaux                   -- page 52
   | Lwax                    -- page 52
-  | Lwbrx                   -- page 52
-  | Lwz                     -- page 60
-  | Lwzcix                  -- page 51
-  | Lwzu                    -- page 966
+  | Lwbrx                   -- page 60
+  | Lwz                     -- page 51
+  | Lwzcix                  -- page 966
+  | Lwzu                    -- page 51
   | Lwzux                   -- page 51
   | Lwzx                    -- page 51
-  | Lxsd                    -- page 51
+  | Lxsd                    -- page 480
   | Lxsdx                   -- page 480
-  | Lxsibzx                 -- page 480
+  | Lxsibzx                 -- page 482
   | Lxsihzx                 -- page 482
-  | Lxsiwax                 -- page 482
-  | Lxsiwzx                 -- page 483
-  | Lxssp                   -- page 484
+  | Lxsiwax                 -- page 483
+  | Lxsiwzx                 -- page 484
+  | Lxssp                   -- page 485
   | Lxsspx                  -- page 485
-  | Lxv                     -- page 485
-  | Lxvb16x                 -- page 492
-  | Lxvd2x                  -- page 487
-  | Lxvdsx                  -- page 488
-  | Lxvh8x                  -- page 494
-  | Lxvl                    -- page 495
-  | Lxvll                   -- page 489
-  | Lxvw4x                  -- page 491
-  | Lxvwsx                  -- page 496
-  | Lxvx                    -- page 497
-  | Maddhd                  -- page 492
+  | Lxv                     -- page 492
+  | Lxvb16x                 -- page 487
+  | Lxvd2x                  -- page 488
+  | Lxvdsx                  -- page 494
+  | Lxvh8x                  -- page 495
+  | Lxvl                    -- page 489
+  | Lxvll                   -- page 491
+  | Lxvw4x                  -- page 496
+  | Lxvwsx                  -- page 497
+  | Lxvx                    -- page 492
+  | Maddhd                  -- page 80
   | Maddhdu                 -- page 80
   | Maddld                  -- page 80
-  | Mcrf                    -- page 80
-  | Mcrfs                   -- page 41
-  | Mcrxrx                  -- page 171
-  | Mfbhrbe                 -- page 120
-  | Mfcr                    -- page 909
-  | MffsDot                 -- page 122
+  | Mcrf                    -- page 41
+  | Mcrfs                   -- page 171
+  | Mcrxrx                  -- page 120
+  | Mfbhrbe                 -- page 909
+  | Mfcr                    -- page 122
+  | MffsDot                 -- page 170
   | Mffscdrn                -- page 170
   | Mffscdrni               -- page 170
   | Mffsce                  -- page 170
   | Mffscrn                 -- page 170
   | Mffscrni                -- page 170
   | Mffsl                   -- page 170
-  | Mfmsr                   -- page 170
-  | Mfocrf                  -- page 979
-  | Mfspr                   -- page 122
-  | Mftb                    -- page 119 975
-  | Mfvscr                  -- page 898
-  | Mfvsrd                  -- page 362
+  | Mfmsr                   -- page 979
+  | Mfocrf                  -- page 122
+  | Mfspr                   -- page 119 975
+  | Mftb                    -- page 898
+  | Mfvscr                  -- page 362
+  | Mfvsrd                  -- page 112
   | Mfvsrld                 -- page 112
-  | Mfvsrwz                 -- page 112
-  | Modsd                   -- page 113
-  | Modsw                   -- page 83
-  | Modud                   -- page 77
-  | Moduw                   -- page 83
-  | Msgclr                  -- page 77
-  | Msgclrp                 -- page 1130
-  | Msgsnd                  -- page 1132
-  | Msgsndp                 -- page 1129
-  | Msgsync                 -- page 1131
-  | Mtcrf                   -- page 1132
-  | Mtfsb0Dot               -- page 121
+  | Mfvsrwz                 -- page 113
+  | Modsd                   -- page 83
+  | Modsw                   -- page 77
+  | Modud                   -- page 83
+  | Moduw                   -- page 77
+  | Msgclr                  -- page 1130
+  | Msgclrp                 -- page 1132
+  | Msgsnd                  -- page 1129
+  | Msgsndp                 -- page 1131
+  | Msgsync                 -- page 1132
+  | Mtcrf                   -- page 121
+  | Mtfsb0Dot               -- page 173
   | Mtfsb1Dot               -- page 173
-  | MtfsfDot                -- page 173
+  | MtfsfDot                -- page 172
   | MtfsfiDot               -- page 172
-  | Mtmsr                   -- page 172
-  | Mtmsrd                  -- page 977
-  | Mtocrf                  -- page 978
-  | Mtvscr                  -- page 121
-  | Mtvsrd                  -- page 362
-  | Mtvsrdd                 -- page 114
-  | Mtvsrwa                 -- page 115
-  | Mtvsrws                 -- page 114
-  | Mtvsrwz                 -- page 116
-  | MulhdDot                -- page 115
+  | Mtmsr                   -- page 977
+  | Mtmsrd                  -- page 978
+  | Mtocrf                  -- page 121
+  | Mtvscr                  -- page 362
+  | Mtvsrd                  -- page 114
+  | Mtvsrdd                 -- page 115
+  | Mtvsrwa                 -- page 114
+  | Mtvsrws                 -- page 116
+  | Mtvsrwz                 -- page 115
+  | MulhdDot                -- page 79
   | MulhduDot               -- page 79
-  | MulhwDot                -- page 79
+  | MulhwDot                -- page 73
   | MulhwuDot               -- page 73
-  | MulldFlagODot           -- page 73
-  | Mulli                   -- page 79
+  | MulldFlagODot           -- page 79
+  | Mulli                   -- page 73
   | MullwFlagODot           -- page 73
-  | NandDot                 -- page 73
-  | NegFlagODot             -- page 94
-  | NorDot                  -- page 72
-  | OrDot                   -- page 95
-  | OrcDot                  -- page 94
-  | Ori                     -- page 95
-  | Oris                    -- page 92
-  | PasteDot                -- page 93
-  | Popcntb                 -- page 855
-  | Popcntd                 -- page 97
-  | Popcntw                 -- page 99
-  | Prtyd                   -- page 97
+  | NandDot                 -- page 94
+  | NegFlagODot             -- page 72
+  | NorDot                  -- page 95
+  | OrDot                   -- page 94
+  | OrcDot                  -- page 95
+  | Ori                     -- page 92
+  | Oris                    -- page 93
+  | PasteDot                -- page 855
+  | Popcntb                 -- page 97
+  | Popcntd                 -- page 99
+  | Popcntw                 -- page 97
+  | Prtyd                   -- page 98
   | Prtyw                   -- page 98
-  | Rfebb                   -- page 98
-  | Rfid                    -- page 905
-  | Rfscv                   -- page 955
-  | RldclDot                -- page 953
+  | Rfebb                   -- page 905
+  | Rfid                    -- page 955
+  | Rfscv                   -- page 953
+  | RldclDot                -- page 104
   | RldcrDot                -- page 104
-  | RldicDot                -- page 104
+  | RldicDot                -- page 105
   | RldiclDot               -- page 105
-  | RldicrDot               -- page 105
+  | RldicrDot               -- page 106
   | RldimiDot               -- page 106
-  | RlwimiDot               -- page 106
-  | RlwinmDot               -- page 103
-  | RlwnmDot                -- page 102
-  | Setb                    -- page 103
-  | SlbfeeDot               -- page 122
-  | Slbia                   -- page 1031
-  | Slbiag                  -- page 1026
-  | Slbie                   -- page 1028
-  | Slbmfee                 -- page 1024
-  | Slbmfev                 -- page 1031
-  | Slbmte                  -- page 1030
-  | Slbsync                 -- page 1029
-  | SldDot                  -- page 1032
-  | SlwDot                  -- page 109
-  | SradDot                 -- page 107
+  | RlwimiDot               -- page 103
+  | RlwinmDot               -- page 102
+  | RlwnmDot                -- page 103
+  | Setb                    -- page 122
+  | SlbfeeDot               -- page 1031
+  | Slbia                   -- page 1026
+  | Slbiag                  -- page 1028
+  | Slbie                   -- page 1024
+  | Slbmfee                 -- page 1031
+  | Slbmfev                 -- page 1030
+  | Slbmte                  -- page 1029
+  | Slbsync                 -- page 1032
+  | SldDot                  -- page 109
+  | SlwDot                  -- page 107
+  | SradDot                 -- page 110
   | SradiDot                -- page 110
-  | SrawDot                 -- page 110
+  | SrawDot                 -- page 108
   | SrawiDot                -- page 108
-  | SrdDot                  -- page 108
-  | SrwDot                  -- page 109
-  | Stb                     -- page 107
-  | Stbcix                  -- page 54
-  | Stbu                    -- page 967
+  | SrdDot                  -- page 109
+  | SrwDot                  -- page 107
+  | Stb                     -- page 54
+  | Stbcix                  -- page 967
+  | Stbu                    -- page 54
   | Stbux                   -- page 54
   | Stbx                    -- page 54
-  | Std                     -- page 54
-  | Stdat                   -- page 57
-  | Stdbrx                  -- page 862
-  | Stdcix                  -- page 61
-  | Stdu                    -- page 967
+  | Std                     -- page 57
+  | Stdat                   -- page 862
+  | Stdbrx                  -- page 61
+  | Stdcix                  -- page 967
+  | Stdu                    -- page 57
   | Stdux                   -- page 57
   | Stdx                    -- page 57
-  | Stfd                    -- page 57
-  | Stfdp                   -- page 146
-  | Stfdu                   -- page 149
+  | Stfd                    -- page 146
+  | Stfdp                   -- page 149
+  | Stfdu                   -- page 146
   | Stfdux                  -- page 146
   | Stfdx                   -- page 146
-  | Stfiwx                  -- page 146
-  | Stfs                    -- page 147
+  | Stfiwx                  -- page 147
+  | Stfs                    -- page 145
   | Stfsu                   -- page 145
   | Stfsux                  -- page 145
   | Stfsx                   -- page 145
-  | Sth                     -- page 145
-  | Sthbrx                  -- page 55
-  | Sthcix                  -- page 60
-  | Sthu                    -- page 967
+  | Sth                     -- page 55
+  | Sthbrx                  -- page 60
+  | Sthcix                  -- page 967
+  | Sthu                    -- page 55
   | Sthux                   -- page 55
   | Sthx                    -- page 55
-  | Stmw                    -- page 55
-  | Stop                    -- page 62
-  | Stq                     -- page 958
-  | Stswi                   -- page 59
-  | Stvebx                  -- page 65
+  | Stmw                    -- page 62
+  | Stop                    -- page 958
+  | Stq                     -- page 59
+  | Stswi                   -- page 65
+  | Stvebx                  -- page 245
   | Stvehx                  -- page 245
-  | Stvewx                  -- page 245
+  | Stvewx                  -- page 246
   | Stvx                    -- page 246
   | Stvxl                   -- page 246
-  | Stw                     -- page 246
-  | Stwat                   -- page 56
-  | Stwbrx                  -- page 862
-  | Stwcix                  -- page 60
-  | Stwu                    -- page 967
+  | Stw                     -- page 56
+  | Stwat                   -- page 862
+  | Stwbrx                  -- page 60
+  | Stwcix                  -- page 967
+  | Stwu                    -- page 56
   | Stwux                   -- page 56
   | Stwx                    -- page 56
-  | Stxsd                   -- page 56
-  | Stxssp                  -- page 498
-  | Stxv                    -- page 501
-  | SubfFlagODot            -- page 507
-  | SubfcFlagODot           -- page 69
-  | SubfeFlagODot           -- page 70
-  | Subfic                  -- page 71
-  | SubfmeFlagODot          -- page 70
-  | SubfzeFlagODot          -- page 71
-  | Sync                    -- page 72
-  | Tcheck                  -- page 873
-  | Td                      -- page 895
+  | Stxsd                   -- page 498
+  | Stxssp                  -- page 501
+  | Stxv                    -- page 507
+  | SubfFlagODot            -- page 69
+  | SubfcFlagODot           -- page 70
+  | SubfeFlagODot           -- page 71
+  | Subfic                  -- page 70
+  | SubfmeFlagODot          -- page 71
+  | SubfzeFlagODot          -- page 72
+  | Sync                    -- page 873
+  | Tcheck                  -- page 895
+  | Td                      -- page 91
   | Tdi                     -- page 91
-  | TendDot                 -- page 91
-  | Tlbiel                  -- page 891
-  | Tlbsync                 -- page 1038
-  | TrechkptDot             -- page 1042
-  | TsrDot                  -- page 970
-  | Tw                      -- page 895
+  | TendDot                 -- page 891
+  | Tlbiel                  -- page 1038
+  | Tlbsync                 -- page 1042
+  | TrechkptDot             -- page 970
+  | TsrDot                  -- page 895
+  | Tw                      -- page 90
   | Twi                     -- page 90
-  | Vabsdub                 -- page 90
+  | Vabsdub                 -- page 297
   | Vabsduh                 -- page 297
-  | Vabsduw                 -- page 297
-  | Vaddcuq                 -- page 298
-  | Vaddcuw                 -- page 273
-  | Vaddfp                  -- page 269
-  | Vaddsbs                 -- page 321
+  | Vabsduw                 -- page 298
+  | Vaddcuq                 -- page 273
+  | Vaddcuw                 -- page 269
+  | Vaddfp                  -- page 321
+  | Vaddsbs                 -- page 269
   | Vaddshs                 -- page 269
-  | Vaddsws                 -- page 269
+  | Vaddsws                 -- page 270
   | Vaddubm                 -- page 270
-  | Vaddubs                 -- page 270
-  | Vaddudm                 -- page 272
-  | Vadduhm                 -- page 270
-  | Vadduhs                 -- page 271
-  | Vadduqm                 -- page 272
-  | Vadduwm                 -- page 273
-  | Vadduws                 -- page 271
-  | Vand                    -- page 272
+  | Vaddubs                 -- page 272
+  | Vaddudm                 -- page 270
+  | Vadduhm                 -- page 271
+  | Vadduhs                 -- page 272
+  | Vadduqm                 -- page 273
+  | Vadduwm                 -- page 271
+  | Vadduws                 -- page 272
+  | Vand                    -- page 312
   | Vandc                   -- page 312
-  | Vavgsb                  -- page 312
+  | Vavgsb                  -- page 295
   | Vavgsh                  -- page 295
   | Vavgsw                  -- page 295
-  | Vavgub                  -- page 295
+  | Vavgub                  -- page 296
   | Vavguh                  -- page 296
   | Vavguw                  -- page 296
-  | Vbpermd                 -- page 296
+  | Vbpermd                 -- page 346
   | Vbpermq                 -- page 346
-  | Vcfsx                   -- page 346
+  | Vcfsx                   -- page 325
   | Vcfux                   -- page 325
-  | Vcipher                 -- page 325
+  | Vcipher                 -- page 333
   | Vcipherlast             -- page 333
-  | Vclzb                   -- page 333
+  | Vclzb                   -- page 340
   | Vclzd                   -- page 340
   | Vclzh                   -- page 340
-  | Vclzlsbb                -- page 340
-  | Vclzw                   -- page 342
-  | VcmpbfpDot              -- page 340
-  | VcmpeqfpDot             -- page 328
-  | VcmpequbDot             -- page 329
-  | VcmpequdDot             -- page 303
-  | VcmpequhDot             -- page 304
-  | VcmpequwDot             -- page 303
-  | VcmpgefpDot             -- page 304
-  | VcmpgtfpDot             -- page 329
-  | VcmpgtsbDot             -- page 330
+  | Vclzlsbb                -- page 342
+  | Vclzw                   -- page 340
+  | VcmpbfpDot              -- page 328
+  | VcmpeqfpDot             -- page 329
+  | VcmpequbDot             -- page 303
+  | VcmpequdDot             -- page 304
+  | VcmpequhDot             -- page 303
+  | VcmpequwDot             -- page 304
+  | VcmpgefpDot             -- page 329
+  | VcmpgtfpDot             -- page 330
+  | VcmpgtsbDot             -- page 305
   | VcmpgtsdDot             -- page 305
-  | VcmpgtshDot             -- page 305
+  | VcmpgtshDot             -- page 306
   | VcmpgtswDot             -- page 306
-  | VcmpgtubDot             -- page 306
+  | VcmpgtubDot             -- page 307
   | VcmpgtudDot             -- page 307
-  | VcmpgtuhDot             -- page 307
+  | VcmpgtuhDot             -- page 308
   | VcmpgtuwDot             -- page 308
-  | VcmpnebDot              -- page 308
-  | VcmpnehDot              -- page 309
-  | VcmpnewDot              -- page 310
-  | VcmpnezbDot             -- page 311
-  | VcmpnezhDot             -- page 309
-  | VcmpnezwDot             -- page 310
-  | Vctsxs                  -- page 311
+  | VcmpnebDot              -- page 309
+  | VcmpnehDot              -- page 310
+  | VcmpnewDot              -- page 311
+  | VcmpnezbDot             -- page 309
+  | VcmpnezhDot             -- page 310
+  | VcmpnezwDot             -- page 311
+  | Vctsxs                  -- page 324
   | Vctuxs                  -- page 324
-  | Vctzb                   -- page 324
+  | Vctzb                   -- page 341
   | Vctzd                   -- page 341
   | Vctzh                   -- page 341
-  | Vctzlsbb                -- page 341
-  | Vctzw                   -- page 342
-  | Veqv                    -- page 341
-  | Vexptefp                -- page 312
-  | Vextractd               -- page 331
+  | Vctzlsbb                -- page 342
+  | Vctzw                   -- page 341
+  | Veqv                    -- page 312
+  | Vexptefp                -- page 331
+  | Vextractd               -- page 267
   | Vextractub              -- page 267
   | Vextractuh              -- page 267
   | Vextractuw              -- page 267
-  | Vextsb2d                -- page 267
+  | Vextsb2d                -- page 294
   | Vextsb2w                -- page 294
   | Vextsh2d                -- page 294
   | Vextsh2w                -- page 294
   | Vextsw2d                -- page 294
-  | Vextublx                -- page 294
+  | Vextublx                -- page 343
   | Vextubrx                -- page 343
   | Vextuhlx                -- page 343
   | Vextuhrx                -- page 343
-  | Vextuwlx                -- page 343
+  | Vextuwlx                -- page 344
   | Vextuwrx                -- page 344
-  | Vgbbd                   -- page 344
-  | Vinsertb                -- page 339
+  | Vgbbd                   -- page 339
+  | Vinsertb                -- page 268
   | Vinsertd                -- page 268
   | Vinserth                -- page 268
   | Vinsertw                -- page 268
-  | Vlogefp                 -- page 268
-  | Vmaddfp                 -- page 331
-  | Vmaxfp                  -- page 322
-  | Vmaxsb                  -- page 323
+  | Vlogefp                 -- page 331
+  | Vmaddfp                 -- page 322
+  | Vmaxfp                  -- page 323
+  | Vmaxsb                  -- page 299
   | Vmaxsd                  -- page 299
-  | Vmaxsh                  -- page 299
+  | Vmaxsh                  -- page 300
   | Vmaxsw                  -- page 300
-  | Vmaxub                  -- page 300
+  | Vmaxub                  -- page 299
   | Vmaxud                  -- page 299
-  | Vmaxuh                  -- page 299
+  | Vmaxuh                  -- page 300
   | Vmaxuw                  -- page 300
-  | Vmhaddshs               -- page 300
+  | Vmhaddshs               -- page 285
   | Vmhraddshs              -- page 285
-  | Vminfp                  -- page 285
-  | Vminsb                  -- page 323
+  | Vminfp                  -- page 323
+  | Vminsb                  -- page 301
   | Vminsd                  -- page 301
-  | Vminsh                  -- page 301
+  | Vminsh                  -- page 302
   | Vminsw                  -- page 302
-  | Vminub                  -- page 302
+  | Vminub                  -- page 301
   | Vminud                  -- page 301
-  | Vminuh                  -- page 301
+  | Vminuh                  -- page 302
   | Vminuw                  -- page 302
-  | Vmladduhm               -- page 302
-  | Vmrgew                  -- page 286
-  | Vmrghb                  -- page 257
+  | Vmladduhm               -- page 286
+  | Vmrgew                  -- page 257
+  | Vmrghb                  -- page 255
   | Vmrghh                  -- page 255
-  | Vmrghw                  -- page 255
-  | Vmrglb                  -- page 256
+  | Vmrghw                  -- page 256
+  | Vmrglb                  -- page 255
   | Vmrglh                  -- page 255
-  | Vmrglw                  -- page 255
-  | Vmrgow                  -- page 256
-  | Vmsummbm                -- page 257
+  | Vmrglw                  -- page 256
+  | Vmrgow                  -- page 257
+  | Vmsummbm                -- page 287
   | Vmsumshm                -- page 287
-  | Vmsumshs                -- page 287
-  | Vmsumubm                -- page 288
-  | Vmsumudm                -- page 286
-  | Vmsumuhm                -- page 289
-  | Vmsumuhs                -- page 288
-  | Vmul10cuq               -- page 289
+  | Vmsumshs                -- page 288
+  | Vmsumubm                -- page 286
+  | Vmsumudm                -- page 289
+  | Vmsumuhm                -- page 288
+  | Vmsumuhs                -- page 289
+  | Vmul10cuq               -- page 355
   | Vmul10ecuq              -- page 355
   | Vmul10euq               -- page 355
   | Vmul10uq                -- page 355
-  | Vmulesb                 -- page 355
-  | Vmulesh                 -- page 281
-  | Vmulesw                 -- page 282
-  | Vmuleub                 -- page 283
-  | Vmuleuh                 -- page 281
-  | Vmuleuw                 -- page 282
-  | Vmulosb                 -- page 283
-  | Vmulosh                 -- page 281
-  | Vmulosw                 -- page 282
-  | Vmuloub                 -- page 283
-  | Vmulouh                 -- page 281
-  | Vmulouw                 -- page 282
-  | Vmuluwm                 -- page 283
-  | Vnand                   -- page 284
-  | Vncipher                -- page 312
+  | Vmulesb                 -- page 281
+  | Vmulesh                 -- page 282
+  | Vmulesw                 -- page 283
+  | Vmuleub                 -- page 281
+  | Vmuleuh                 -- page 282
+  | Vmuleuw                 -- page 283
+  | Vmulosb                 -- page 281
+  | Vmulosh                 -- page 282
+  | Vmulosw                 -- page 283
+  | Vmuloub                 -- page 281
+  | Vmulouh                 -- page 282
+  | Vmulouw                 -- page 283
+  | Vmuluwm                 -- page 284
+  | Vnand                   -- page 312
+  | Vncipher                -- page 334
   | Vncipherlast            -- page 334
-  | Vnegd                   -- page 334
+  | Vnegd                   -- page 293
   | Vnegw                   -- page 293
-  | Vnmsubfp                -- page 293
-  | Vnor                    -- page 322
+  | Vnmsubfp                -- page 322
+  | Vnor                    -- page 313
   | Vor                     -- page 313
   | Vorc                    -- page 313
-  | Vpermxor                -- page 313
-  | Vpkpx                   -- page 338
+  | Vpermxor                -- page 338
+  | Vpkpx                   -- page 248
   | Vpksdss                 -- page 248
-  | Vpksdus                 -- page 248
+  | Vpksdus                 -- page 249
   | Vpkshss                 -- page 249
-  | Vpkshus                 -- page 249
+  | Vpkshus                 -- page 250
   | Vpkswss                 -- page 250
-  | Vpkswus                 -- page 250
+  | Vpkswus                 -- page 251
   | Vpkudum                 -- page 251
   | Vpkudus                 -- page 251
   | Vpkuhum                 -- page 251
-  | Vpkuhus                 -- page 251
+  | Vpkuhus                 -- page 252
   | Vpkuwum                 -- page 252
   | Vpkuwus                 -- page 252
-  | Vpmsumb                 -- page 252
+  | Vpmsumb                 -- page 336
   | Vpmsumd                 -- page 336
-  | Vpmsumh                 -- page 336
+  | Vpmsumh                 -- page 337
   | Vpmsumw                 -- page 337
-  | Vpopcntb                -- page 337
+  | Vpopcntb                -- page 345
   | Vpopcntd                -- page 345
   | Vpopcnth                -- page 345
   | Vpopcntw                -- page 345
-  | Vprtybd                 -- page 345
+  | Vprtybd                 -- page 314
   | Vprtybq                 -- page 314
   | Vprtybw                 -- page 314
-  | Vrefp                   -- page 314
-  | Vrfim                   -- page 332
+  | Vrefp                   -- page 332
+  | Vrfim                   -- page 326
   | Vrfin                   -- page 326
   | Vrfip                   -- page 326
-  | Vrfiz                   -- page 326
-  | Vrlb                    -- page 327
+  | Vrfiz                   -- page 327
+  | Vrlb                    -- page 315
   | Vrld                    -- page 315
-  | Vrldmi                  -- page 315
+  | Vrldmi                  -- page 320
   | Vrldnm                  -- page 320
-  | Vrlh                    -- page 320
+  | Vrlh                    -- page 315
   | Vrlw                    -- page 315
-  | Vrlwmi                  -- page 315
+  | Vrlwmi                  -- page 319
   | Vrlwnm                  -- page 319
-  | Vrsqrtefp               -- page 319
-  | Vsbox                   -- page 332
-  | Vshasigmad              -- page 334
+  | Vrsqrtefp               -- page 332
+  | Vsbox                   -- page 334
+  | Vshasigmad              -- page 335
   | Vshasigmaw              -- page 335
-  | Vsl                     -- page 335
-  | Vslb                    -- page 264
+  | Vsl                     -- page 264
+  | Vslb                    -- page 316
   | Vsld                    -- page 316
-  | Vsldoi                  -- page 316
-  | Vslh                    -- page 263
-  | Vslo                    -- page 316
-  | Vslv                    -- page 264
-  | Vslw                    -- page 265
-  | Vspltb                  -- page 316
+  | Vsldoi                  -- page 263
+  | Vslh                    -- page 316
+  | Vslo                    -- page 264
+  | Vslv                    -- page 265
+  | Vslw                    -- page 316
+  | Vspltb                  -- page 258
   | Vsplth                  -- page 258
-  | Vspltisb                -- page 258
+  | Vspltisb                -- page 259
   | Vspltish                -- page 259
   | Vspltisw                -- page 259
-  | Vspltw                  -- page 259
-  | Vsr                     -- page 258
-  | Vsrab                   -- page 264
+  | Vspltw                  -- page 258
+  | Vsr                     -- page 264
+  | Vsrab                   -- page 318
   | Vsrad                   -- page 318
   | Vsrah                   -- page 318
   | Vsraw                   -- page 318
-  | Vsrb                    -- page 318
+  | Vsrb                    -- page 317
   | Vsrd                    -- page 317
   | Vsrh                    -- page 317
-  | Vsro                    -- page 317
-  | Vsrv                    -- page 264
-  | Vsrw                    -- page 265
-  | Vsubcuq                 -- page 317
-  | Vsubcuw                 -- page 279
-  | Vsubfp                  -- page 275
-  | Vsubsbs                 -- page 321
+  | Vsro                    -- page 264
+  | Vsrv                    -- page 265
+  | Vsrw                    -- page 317
+  | Vsubcuq                 -- page 279
+  | Vsubcuw                 -- page 275
+  | Vsubfp                  -- page 321
+  | Vsubsbs                 -- page 275
   | Vsubshs                 -- page 275
-  | Vsubsws                 -- page 275
-  | Vsububm                 -- page 276
-  | Vsububs                 -- page 277
-  | Vsubudm                 -- page 278
+  | Vsubsws                 -- page 276
+  | Vsububm                 -- page 277
+  | Vsububs                 -- page 278
+  | Vsubudm                 -- page 277
   | Vsubuhm                 -- page 277
-  | Vsubuhs                 -- page 277
-  | Vsubuqm                 -- page 278
-  | Vsubuwm                 -- page 279
-  | Vsubuws                 -- page 277
-  | Vsum2sws                -- page 278
-  | Vsum4sbs                -- page 290
+  | Vsubuhs                 -- page 278
+  | Vsubuqm                 -- page 279
+  | Vsubuwm                 -- page 277
+  | Vsubuws                 -- page 278
+  | Vsum2sws                -- page 290
+  | Vsum4sbs                -- page 291
   | Vsum4shs                -- page 291
-  | Vsum4ubs                -- page 291
-  | Vsumsws                 -- page 292
-  | Vupkhpx                 -- page 290
-  | Vupkhsb                 -- page 253
+  | Vsum4ubs                -- page 292
+  | Vsumsws                 -- page 290
+  | Vupkhpx                 -- page 253
+  | Vupkhsb                 -- page 254
   | Vupkhsh                 -- page 254
   | Vupkhsw                 -- page 254
-  | Vupklpx                 -- page 254
-  | Vupklsb                 -- page 253
+  | Vupklpx                 -- page 253
+  | Vupklsb                 -- page 254
   | Vupklsh                 -- page 254
   | Vupklsw                 -- page 254
-  | Vxor                    -- page 254
-  | Wait                    -- page 313
-  | Xnop                    -- page 876
-  | XorDot                  -- page 93
-  | Xori                    -- page 94
+  | Vxor                    -- page 313
+  | Wait                    -- page 876
+  | Xnop                    -- page 93
+  | XorDot                  -- page 94
+  | Xori                    -- page 93
   | Xoris                   -- page 93
-  | Xsabsdp                 -- page 93
+  | Xsabsdp                 -- page 512
   | Xsabsqp                 -- page 512
-  | Xsadddp                 -- page 512
-  | Xsaddsp                 -- page 513
-  | Xscmpexpdp              -- page 518
-  | Xscmpexpqp              -- page 522
-  | Xscmpodp                -- page 523
-  | Xscmpudp                -- page 527
-  | Xscmpuqp                -- page 530
-  | Xscpsgndp               -- page 532
+  | Xsadddp                 -- page 513
+  | Xsaddsp                 -- page 518
+  | Xscmpexpdp              -- page 522
+  | Xscmpexpqp              -- page 523
+  | Xscmpodp                -- page 527
+  | Xscmpudp                -- page 530
+  | Xscmpuqp                -- page 532
+  | Xscpsgndp               -- page 533
   | Xscpsgnqp               -- page 533
-  | Xscvdphp                -- page 533
-  | Xscvdpqp                -- page 534
-  | Xscvdpsp                -- page 535
-  | Xscvdpspn               -- page 536
+  | Xscvdphp                -- page 534
+  | Xscvdpqp                -- page 535
+  | Xscvdpsp                -- page 536
+  | Xscvdpspn               -- page 537
   | Xscvdpsxds              -- page 537
-  | Xscvdpsxws              -- page 537
-  | Xscvdpuxds              -- page 540
-  | Xscvdpuxws              -- page 542
-  | Xscvhpdp                -- page 544
-  | XscvqpdpFlagO           -- page 546
-  | Xscvqpsdz               -- page 547
-  | Xscvqpswz               -- page 548
-  | Xscvqpudz               -- page 550
-  | Xscvqpuwz               -- page 552
-  | Xscvsdqp                -- page 554
-  | Xscvspdp                -- page 556
-  | Xscvspdpn               -- page 557
-  | Xscvsxddp               -- page 558
+  | Xscvdpsxws              -- page 540
+  | Xscvdpuxds              -- page 542
+  | Xscvdpuxws              -- page 544
+  | Xscvhpdp                -- page 546
+  | XscvqpdpFlagO           -- page 547
+  | Xscvqpsdz               -- page 548
+  | Xscvqpswz               -- page 550
+  | Xscvqpudz               -- page 552
+  | Xscvqpuwz               -- page 554
+  | Xscvsdqp                -- page 556
+  | Xscvspdp                -- page 557
+  | Xscvspdpn               -- page 558
+  | Xscvsxddp               -- page 559
   | Xscvsxdsp               -- page 559
-  | Xscvudqp                -- page 559
-  | Xscvuxddp               -- page 560
+  | Xscvudqp                -- page 560
+  | Xscvuxddp               -- page 561
   | Xscvuxdsp               -- page 561
-  | Xsdivdp                 -- page 561
-  | Xsdivsp                 -- page 562
-  | Xsiexpdp                -- page 566
-  | Xsiexpqp                -- page 568
-  | Xsmaxdp                 -- page 569
-  | Xsmindp                 -- page 579
-  | Xsmuldp                 -- page 585
-  | Xsmulsp                 -- page 600
-  | Xsnabsdp                -- page 604
+  | Xsdivdp                 -- page 562
+  | Xsdivsp                 -- page 566
+  | Xsiexpdp                -- page 568
+  | Xsiexpqp                -- page 569
+  | Xsmaxdp                 -- page 579
+  | Xsmindp                 -- page 585
+  | Xsmuldp                 -- page 600
+  | Xsmulsp                 -- page 604
+  | Xsnabsdp                -- page 606
   | Xsnabsqp                -- page 606
-  | Xsnegdp                 -- page 606
+  | Xsnegdp                 -- page 607
   | Xsnegqp                 -- page 607
-  | Xsrdpi                  -- page 607
-  | Xsrdpic                 -- page 628
-  | Xsrdpim                 -- page 629
+  | Xsrdpi                  -- page 628
+  | Xsrdpic                 -- page 629
+  | Xsrdpim                 -- page 630
   | Xsrdpip                 -- page 630
-  | Xsrdpiz                 -- page 630
-  | Xsredp                  -- page 631
-  | Xsresp                  -- page 632
-  | XsrqpiFlagInExact       -- page 633
-  | Xsrqpxp                 -- page 634
-  | Xsrsp                   -- page 636
-  | Xsrsqrtedp              -- page 638
-  | Xsrsqrtesp              -- page 639
-  | Xssqrtdp                -- page 640
-  | XssqrtqpFlagO           -- page 641
-  | Xssqrtsp                -- page 642
-  | Xssubdp                 -- page 644
-  | Xssubsp                 -- page 645
-  | Xstdivdp                -- page 649
-  | Xstsqrtdp               -- page 651
-  | Xststdcdp               -- page 652
-  | Xststdcqp               -- page 653
-  | Xststdcsp               -- page 654
-  | Xsxexpdp                -- page 655
+  | Xsrdpiz                 -- page 631
+  | Xsredp                  -- page 632
+  | Xsresp                  -- page 633
+  | XsrqpiFlagInExact       -- page 634
+  | Xsrqpxp                 -- page 636
+  | Xsrsp                   -- page 638
+  | Xsrsqrtedp              -- page 639
+  | Xsrsqrtesp              -- page 640
+  | Xssqrtdp                -- page 641
+  | XssqrtqpFlagO           -- page 642
+  | Xssqrtsp                -- page 644
+  | Xssubdp                 -- page 645
+  | Xssubsp                 -- page 649
+  | Xstdivdp                -- page 651
+  | Xstsqrtdp               -- page 652
+  | Xststdcdp               -- page 653
+  | Xststdcqp               -- page 654
+  | Xststdcsp               -- page 655
+  | Xsxexpdp                -- page 656
   | Xsxexpqp                -- page 656
-  | Xsxsigdp                -- page 656
+  | Xsxsigdp                -- page 657
   | Xsxsigqp                -- page 657
-  | Xvabsdp                 -- page 657
+  | Xvabsdp                 -- page 658
   | Xvabssp                 -- page 658
-  | Xvadddp                 -- page 658
-  | Xvaddsp                 -- page 659
-  | XvcmpeqdpDot            -- page 663
-  | XvcmpeqspDot            -- page 665
-  | XvcmpgedpDot            -- page 666
-  | XvcmpgespDot            -- page 667
-  | XvcmpgtdpDot            -- page 668
-  | XvcmpgtspDot            -- page 669
-  | Xvcpsgndp               -- page 670
+  | Xvadddp                 -- page 659
+  | Xvaddsp                 -- page 663
+  | XvcmpeqdpDot            -- page 665
+  | XvcmpeqspDot            -- page 666
+  | XvcmpgedpDot            -- page 667
+  | XvcmpgespDot            -- page 668
+  | XvcmpgtdpDot            -- page 669
+  | XvcmpgtspDot            -- page 670
+  | Xvcpsgndp               -- page 671
   | Xvcpsgnsp               -- page 671
-  | Xvcvdpsp                -- page 671
-  | Xvcvdpsxds              -- page 672
-  | Xvcvdpsxws              -- page 673
-  | Xvcvdpuxds              -- page 675
-  | Xvcvdpuxws              -- page 677
-  | Xvcvhpsp                -- page 679
-  | Xvcvspdp                -- page 681
-  | Xvcvsphp                -- page 682
-  | Xvcvspsxds              -- page 683
-  | Xvcvspsxws              -- page 684
-  | Xvcvspuxds              -- page 686
-  | Xvcvspuxws              -- page 688
-  | Xvcvsxddp               -- page 690
+  | Xvcvdpsp                -- page 672
+  | Xvcvdpsxds              -- page 673
+  | Xvcvdpsxws              -- page 675
+  | Xvcvdpuxds              -- page 677
+  | Xvcvdpuxws              -- page 679
+  | Xvcvhpsp                -- page 681
+  | Xvcvspdp                -- page 682
+  | Xvcvsphp                -- page 683
+  | Xvcvspsxds              -- page 684
+  | Xvcvspsxws              -- page 686
+  | Xvcvspuxds              -- page 688
+  | Xvcvspuxws              -- page 690
+  | Xvcvsxddp               -- page 692
   | Xvcvsxdsp               -- page 692
-  | Xvcvsxwdp               -- page 692
+  | Xvcvsxwdp               -- page 693
   | Xvcvsxwsp               -- page 693
-  | Xvcvuxddp               -- page 693
+  | Xvcvuxddp               -- page 694
   | Xvcvuxdsp               -- page 694
-  | Xvcvuxwdp               -- page 694
+  | Xvcvuxwdp               -- page 695
   | Xvcvuxwsp               -- page 695
-  | Xvdivdp                 -- page 695
-  | Xvdivsp                 -- page 696
-  | Xviexpdp                -- page 698
+  | Xvdivdp                 -- page 696
+  | Xvdivsp                 -- page 698
+  | Xviexpdp                -- page 700
   | Xviexpsp                -- page 700
-  | Xvmaddmdp               -- page 700
-  | Xvmaxdp                 -- page 701
-  | Xvmaxsp                 -- page 707
-  | Xvmindp                 -- page 709
-  | Xvminsp                 -- page 711
-  | Xvmsubmsp               -- page 713
-  | Xvmuldp                 -- page 718
-  | Xvmulsp                 -- page 721
-  | Xvnabsdp                -- page 723
+  | Xvmaddmdp               -- page 701
+  | Xvmaxdp                 -- page 707
+  | Xvmaxsp                 -- page 709
+  | Xvmindp                 -- page 711
+  | Xvminsp                 -- page 713
+  | Xvmsubmsp               -- page 718
+  | Xvmuldp                 -- page 721
+  | Xvmulsp                 -- page 723
+  | Xvnabsdp                -- page 725
   | Xvnabssp                -- page 725
-  | Xvnegdp                 -- page 725
+  | Xvnegdp                 -- page 726
   | Xvnegsp                 -- page 726
-  | Xvrdpi                  -- page 726
+  | Xvrdpi                  -- page 741
   | Xvrdpic                 -- page 741
-  | Xvrdpim                 -- page 741
+  | Xvrdpim                 -- page 742
   | Xvrdpip                 -- page 742
-  | Xvrdpiz                 -- page 742
-  | Xvredp                  -- page 743
-  | Xvresp                  -- page 744
-  | Xvrspi                  -- page 745
+  | Xvrdpiz                 -- page 743
+  | Xvredp                  -- page 744
+  | Xvresp                  -- page 745
+  | Xvrspi                  -- page 746
   | Xvrspic                 -- page 746
-  | Xvrspim                 -- page 746
+  | Xvrspim                 -- page 747
   | Xvrspip                 -- page 747
-  | Xvrspiz                 -- page 747
+  | Xvrspiz                 -- page 748
   | Xvrsqrtedp              -- page 748
-  | Xvrsqrtesp              -- page 748
-  | Xvsqrtdp                -- page 750
-  | Xvsqrtsp                -- page 751
-  | Xvsubdp                 -- page 752
-  | Xvsubsp                 -- page 753
-  | Xvtdivdp                -- page 755
-  | Xvtdivsp                -- page 757
-  | Xvtsqrtdp               -- page 758
+  | Xvrsqrtesp              -- page 750
+  | Xvsqrtdp                -- page 751
+  | Xvsqrtsp                -- page 752
+  | Xvsubdp                 -- page 753
+  | Xvsubsp                 -- page 755
+  | Xvtdivdp                -- page 757
+  | Xvtdivsp                -- page 758
+  | Xvtsqrtdp               -- page 759
   | Xvtsqrtsp               -- page 759
-  | Xvtstdcdp               -- page 759
-  | Xvtstdcsp               -- page 760
-  | Xvxexpdp                -- page 761
+  | Xvtstdcdp               -- page 760
+  | Xvtstdcsp               -- page 761
+  | Xvxexpdp                -- page 762
   | Xvxexpsp                -- page 762
-  | Xvxsigdp                -- page 762
+  | Xvxsigdp                -- page 763
   | Xvxsigsp                -- page 763
-  | Xxbrd                   -- page 763
+  | Xxbrd                   -- page 764
   | Xxbrh                   -- page 764
-  | Xxbrq                   -- page 764
+  | Xxbrq                   -- page 765
   | Xxbrw                   -- page 765
-  | Xxextractuw             -- page 765
+  | Xxextractuw             -- page 766
   | Xxinsertw               -- page 766
-  | Xxland                  -- page 766
+  | Xxland                  -- page 767
   | Xxlandc                 -- page 767
-  | Xxleqv                  -- page 767
+  | Xxleqv                  -- page 768
   | Xxlnand                 -- page 768
-  | Xxlnor                  -- page 768
-  | Xxlor                   -- page 769
-  | Xxlorc                  -- page 770
-  | Xxlxor                  -- page 769
-  | Xxmrghw                 -- page 770
+  | Xxlnor                  -- page 769
+  | Xxlor                   -- page 770
+  | Xxlorc                  -- page 769
+  | Xxlxor                  -- page 770
+  | Xxmrghw                 -- page 771
   | Xxmrglw                 -- page 771
-  | Xxpermdi                -- page 771
-  | Xxsldwi                 -- page 773
+  | Xxpermdi                -- page 773
+  | Xxsldwi                 -- page 774
   | Xxspltib                -- page 774
   | Xxspltw                 -- page 774
   deriving (Generic, Show, Eq, NFDataX)
