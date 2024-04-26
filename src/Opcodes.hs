@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE NumericUnderscores #-}
 
-module Opcodes(Opcode) where
+module Opcodes(Opcode(..)) where
 import Clash.Prelude
 
 data Opcode 
