@@ -5,10 +5,15 @@
 module Main where
 
 import Clash.Prelude
-import Control.Monad.State
+import Control.Monad.State ( replicateM_, modify, execState )
 
 import Clash.Sized.Vector (Vec(..))
 import Clash.Sized.BitVector (BitVector)
+
+import Forms(FormA2(..))
+
+-- o = FormSC1 {  sc1AA = 1, sc1LK = 0 }
+o = FormA2 {  a2FRT = 0, a2FRA = 0, a2FRC = 0, a2Rc = 0 }
 
 -- currently memory is only 8 words deep
 memInit :: [Unsigned 32]
@@ -22,6 +27,8 @@ memInit = [
 type PC = Unsigned 64
 type GPR = Vec 32 (Unsigned 64) -- General Purpose Registers page 10
 type Mem n = Vec n (Unsigned 32)
+
+a = 5 :: Unsigned 5
 
 data POWER_CPU = POWER_CPU
   { pc :: PC,
