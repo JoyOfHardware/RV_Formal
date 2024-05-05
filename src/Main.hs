@@ -5,15 +5,14 @@
 module Main where
 
 import Clash.Prelude
-import Control.Monad.State ( replicateM_, modify, execState )
-
-import Clash.Sized.Vector (Vec(..))
-import Clash.Sized.BitVector (BitVector)
-
 import Forms(FormA2(..))
 
--- o = FormSC1 {  sc1AA = 1, sc1LK = 0 }
-o = FormA2 {  a2FRT = 0, a2FRA = 0, a2FRC = 0, a2Rc = 0 }
+powerIndex32 :: forall n a . (KnownNat n, Num a) => 
+  0 <= n => 
+  n <= 31 => 
+  a -> SNat (31 - n)
+powerIndex32 n = SNat @(31 - n)
+
 
 -- currently memory is only 8 words deep
 memInit :: [Unsigned 32]
@@ -28,7 +27,6 @@ type PC = Unsigned 64
 type GPR = Vec 32 (Unsigned 64) -- General Purpose Registers page 10
 type Mem n = Vec n (Unsigned 32)
 
-a = 5 :: Unsigned 5
 
 data POWER_CPU = POWER_CPU
   { pc :: PC,
@@ -52,46 +50,6 @@ machine' machine@(Machine { cpu = POWER_CPU { pc = pc }, mem = mem }) =
     machine { mem = replace (0 :: Integer) (head mem + 1) mem }
 
 
--- OLD MODEL
-type Register = Unsigned 8
-type PCOLD = Unsigned 64
-
-data Instruction
-  = Add
-  | Sub
-  deriving (Show, Generic, NFDataX)
-data CPU = CPU
-  { pcOld :: PCOLD,
-    regA :: Register,
-    regB :: Register,
-    aluOut :: Register
-  } deriving (Show)
-
-initialCPU :: CPU
-initialCPU = CPU {pcOld = 0, regA = 0, regB = 2, aluOut = 0}
-
-alu :: Instruction -> Register -> Register -> Register
-alu Add a b = a + b
-alu Sub a b = a - b
-
-fetch :: PCOLD -> Instruction
-fetch 0 = Add
-fetch 1 = Sub
-fetch _ = error "Invalid PC"
-
-decode :: Instruction -> Instruction
-decode = id
-
-execute :: CPU -> Instruction -> CPU
-execute cpu@CPU {..} instr = cpu {aluOut = alu instr regA regB}
-
-step :: CPU -> CPU
-step cpu@CPU {..} = execute cpu (decode (fetch pcOld))
-
-simulateCPU :: Int -> CPU
-simulateCPU n = execState (replicateM_ n (modify step)) initialCPU
-
 main :: IO ()
 main = do
-  let finalState = simulateCPU 3
-  print finalState
+  putStrLn "Hello from Main!"

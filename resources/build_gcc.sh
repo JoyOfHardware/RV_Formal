@@ -15,7 +15,7 @@ export WDIR=/tmp
 unameOut="$(uname -srm)"
 macOSver="${unameOut##* }"
 export BUILD="x86_64-apple-darwin${macOSver#darwin}"  # This assumes the output includes the darwin version
-export TARGET=powerpc64le-linux-gnu
+export TARGET=powerpc64-linux-gnu
 export PREFIX=/opt/cross/${TARGET}
 cd ${WDIR}
 mkdir -p ${TARGET}-src
@@ -47,7 +47,7 @@ ${WDIR}/${TARGET}-src/binutils-2.32/configure \
     --target=${TARGET}
 make -j 8
 sudo make install-strip
-echo "export PATH=/opt/cross/powerpc64-linux-gnu/bin/:\$PATH" >> $HOME/.bash_profile
+echo "export PATH=/opt/cross/${TARGET}/bin/:\$PATH" >> $HOME/.bash_profile
 
 # GCC
 cd ${WDIR}/${TARGET}-src
