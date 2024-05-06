@@ -1,0 +1,10 @@
+[package]
+name = "bare_metal_powerpc64"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+opt-level = "s"
+panic = "abort"  # Add this line to change the panic strategy
+
+[dependencies]

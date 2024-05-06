@@ -20,6 +20,14 @@ $MAIN=Main make
 All the context that we pick up as we execute an instruction in
 essence forms the context of our micro-op machinery.
 
+## Installing GCC-PPC Toolchain on MacOS
+
+```bash
+brew install gcc@10 gmp mpfr libmpc
+cd resources
+bash build_gcc.sh
+```
+
 # TODO
  - [ ] getOpcode :: Instr -> Opcode
  - [ ] getForm :: Opcode -> Form

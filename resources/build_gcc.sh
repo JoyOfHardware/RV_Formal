@@ -15,7 +15,7 @@ export WDIR=/tmp
 unameOut="$(uname -srm)"
 macOSver="${unameOut##* }"
 export BUILD="x86_64-apple-darwin${macOSver#darwin}"  # This assumes the output includes the darwin version
-export TARGET=powerpc64-linux-gnu
+export TARGET=powerpc64le-linux-gnu
 export PREFIX=/opt/cross/${TARGET}
 cd ${WDIR}
 mkdir -p ${TARGET}-src
