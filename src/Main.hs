@@ -1,17 +1,22 @@
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE GADTs #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE NumericUnderscores #-}
 
 module Main where
 
 import Clash.Prelude
-import Forms(FormA2(..))
+import qualified Prelude as P
 
-powerIndex32 :: forall n a . (KnownNat n, Num a) => 
-  0 <= n => 
-  n <= 31 => 
-  a -> SNat (31 - n)
-powerIndex32 n = SNat @(31 - n)
+import Util(powerIndex32, powerIndex64)
+
+
+getRsSlice insn = slice (powerIndex32 @0) (powerIndex32 @5) insn
+val32 = 0x1C_34_56_78 :: Unsigned 32
+
+testValSlice :: Unsigned 6
+testValSlice = unpack $ getRsSlice val32
 
 
 -- currently memory is only 8 words deep
@@ -52,4 +57,8 @@ machine' machine@(Machine { cpu = POWER_CPU { pc = pc }, mem = mem }) =
 
 main :: IO ()
 main = do
-  putStrLn "Hello from Main!"
+  putStrLn final_msg
+  where
+    msg :: String = "Hello from Main!"
+    strVal :: String = show testValSlice
+    final_msg :: String = msg P.++ strVal

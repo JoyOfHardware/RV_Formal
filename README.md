@@ -21,8 +21,9 @@ All the context that we pick up as we execute an instruction in
 essence forms the context of our micro-op machinery.
 
 # TODO
- - [ ] getOpcode :: Instr -> Opcode
  - [ ] getForm :: Opcode -> Form
+   - all fields will be populated of course!
+ - [ ] All Python scripts in one place in this repository
 
 # TODO Quality of Life Enhancements
  - [ ] turn off derive generics
@@ -33,3 +34,14 @@ essence forms the context of our micro-op machinery.
  - [ ] learn to debug with generic pretty prints
  - [ ] draw conclusions on feasibility of debugging
        without VCD viewer
+
+# TODO : Binary Dev and Firmware Testing
+ - [ ] Write test in Rust ppc baremetal toolchain
+ - [ ] Move Python Haskell generators into codebase
+
+# Considerations for FPGA Implementation
+ - [ ] `Opcode -> PackedField` function should have intermediate
+       step that specifies how to slice instruction bitpat to
+       generate/populate sub-fields of a specific form - to the
+       end that more efficient logic is generated for/during
+       synthesis.
