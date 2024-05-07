@@ -47,3 +47,4 @@ cabal.config
 /vhdl
 /verilog
 /systemverilog
+.env
