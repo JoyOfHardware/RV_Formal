@@ -53,3 +53,11 @@ bash build_gcc.sh
        generate/populate sub-fields of a specific form - to the
        end that more efficient logic is generated for/during
        synthesis.
+
+# 2024 Update
+To generate Haskell Opcodes and Decoder, do the following:
+```bash
+cd isa_generator
+python3 extract_opcodes_to_haskell.py isa_packed.csv ../src/Opcodes.hs
+python3 extract_bitpat_to_haskell.py isa_packed.csv ../src/Decode.hs
+```
