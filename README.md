@@ -57,7 +57,10 @@ bash build_gcc.sh
 # 2024 Update
 To generate Haskell Opcodes and Decoder, do the following:
 ```bash
+python3 -m venv .env
 cd isa_generator
+pip3 install -r requirements.txt
 python3 extract_opcodes_to_haskell.py isa_packed.csv ../src/Opcodes.hs
 python3 extract_bitpat_to_haskell.py isa_packed.csv ../src/Decode.hs
+python3 generate_form_variants.py isa.xlsx ../src/Forms.hs
 ```
