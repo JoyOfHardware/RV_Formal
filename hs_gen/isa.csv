@@ -1,4 +1,4 @@
-,Mnemonic,opcode,FORMAT,FORMAT_OLD,SRC1,SRC2,SRC3,SRC4,SRC5,DEST1,DEST2,DEST3,DEST4,DEST5,Special Behavior,"Context 
+,Mnemonic,bitpat,FORMAT,FORMAT_OLD,SRC1,SRC2,SRC3,SRC4,SRC5,DEST1,DEST2,DEST3,DEST4,DEST5,Special Behavior,"Context 
 Synchronizing?",BOOK,PAGE,Versions,Priveledge,Mode Dep,Name,Unsure,"Doable but
 Laborious",MicroWatt Support,PythonWatt Support,MicroPython
 0,fmadd[.],111111 ..... ..... ..... ..... 11101.,A4,A,,FPR,FPR,FPR,FPSCR,FPR,FPSCR,FPSCR,CR1,,,,I,157,P1,,,Floating Multiply-Add,,,,,

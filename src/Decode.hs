@@ -180,8 +180,8 @@ decode $(bitPattern "011111...............0000011100.") = Just AndDot
 decode $(bitPattern "011111...............0000111100.") = Just AndcDot
 decode $(bitPattern "011100..........................") = Just AndiDot
 decode $(bitPattern "011101..........................") = Just AndisDot
-decode $(bitPattern "010010..........................") = Just BFlagLinkFlagAbosolute
-decode $(bitPattern "010000..........................") = Just BcFlagLinkFlagAbosolute
+decode $(bitPattern "010010..........................") = Just BFlagLinkFlagAbsolute
+decode $(bitPattern "010000..........................") = Just BcFlagLinkFlagAbsolute
 decode $(bitPattern "010011...............1000010000.") = Just BcctrFlagLink
 decode $(bitPattern "000100...............1.000000001") = Just BcdaddDot
 decode $(bitPattern "000100.....00111.....1.110000001") = Just BcdcfnDot
@@ -940,4 +940,3 @@ decode $(bitPattern "111100...............0..00010...") = Just Xxsldwi
 decode $(bitPattern "111100.....00........0101101000.") = Just Xxspltib
 decode $(bitPattern "111100...............010100100..") = Just Xxspltw
 decode _ = Nothing
-

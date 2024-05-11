@@ -31,9 +31,16 @@ bash build_gcc.sh
 # TODO
  - [ ] getForm :: Opcode -> Form
    - all fields will be populated of course!
- - [ ] All Python scripts in one place in this repository
+ - [ ] audit behavior of ffil
+ - [ ] Correct typo from 'FlagAbosolute' to 'FlagAbsolute'
+ - [ ] rename `isa_generator` to `haskell_gen`
+ - [ ] rename `isa_packed.csv` and remove uneeded columns
+ - [ ] Perhaps update generator scripts to use Pandas
 
-# TODO Quality of Life Enhancements
+## Readability Improvements
+- [ ] Need to improve readability of Haskell Code generators
+
+## Quality of Life Enhancements
  - [ ] turn off derive generics
  - [ ] update commands to use flags that prevent ghc
        intermediate outputs from littering source tree
@@ -43,7 +50,7 @@ bash build_gcc.sh
  - [ ] draw conclusions on feasibility of debugging
        without VCD viewer
 
-# TODO : Binary Dev and Firmware Testing
+## Binary Dev and Firmware Testing
  - [ ] Write test in Rust ppc baremetal toolchain
  - [ ] Move Python Haskell generators into codebase
 
@@ -54,13 +61,16 @@ bash build_gcc.sh
        end that more efficient logic is generated for/during
        synthesis.
 
-# 2024 Update
-To generate Haskell Opcodes and Decoder, do the following:
+# Generating Haskell Opcodes, Forms, Decoder, and Populated Forms
+Some of the Haskell sources are auto-generated using a Python script
+that reads in POWER ISA information in machine format from a CSV.
+
+Run the following to re-generate the auto-generated Haskell sources.
 ```bash
 python3 -m venv .env
-cd isa_generator
+cd hs_gen
 pip3 install -r requirements.txt
-python3 extract_opcodes_to_haskell.py isa_packed.csv ../src/Opcodes.hs
-python3 extract_bitpat_to_haskell.py isa_packed.csv ../src/Decode.hs
-python3 generate_form_variants.py isa.xlsx ../src/Forms.hs
+python3 extract_opcodes_to_haskell.py ../src/Opcodes.hs
+python3 extract_bitpat_to_haskell.py ../src/Decode.hs
+python3 generate_form_variants.py ../src/Forms.hs
 ```

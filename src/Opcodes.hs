@@ -4,7 +4,7 @@
 module Opcodes(Opcode(..)) where
 import Clash.Prelude
 
-data Opcode 
+data Opcode
   = FmaddDot                -- page 157
   | FmaddsDot               -- page 157
   | FmsubDot                -- page 158
@@ -177,8 +177,8 @@ data Opcode
   | AndcDot                 -- page 95
   | AndiDot                 -- page 92
   | AndisDot                -- page 92
-  | BFlagLinkFlagAbosolute  -- page 37
-  | BcFlagLinkFlagAbosolute -- page 37
+  | BFlagLinkFlagAbsolute   -- page 37
+  | BcFlagLinkFlagAbsolute  -- page 37
   | BcctrFlagLink           -- page 38
   | BcdaddDot               -- page 348
   | BcdcfnDot               -- page 350
