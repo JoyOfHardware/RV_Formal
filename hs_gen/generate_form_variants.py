@@ -71,6 +71,7 @@ f"""{{-# LANGUAGE RecordWildCards #-}}
 
 module Forms (
     Form(..)
+  , FormState(..)
 {'\n'.join(export_list)}
    ) where
 
