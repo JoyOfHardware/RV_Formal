@@ -4,6 +4,7 @@
 
 module Forms (
     Form(..)
+  , FormState(..)
   , FormA1(FormA1, a1FRT, a1FRB, a1Rc)
   , FormA2(FormA2, a2FRT, a2FRA, a2FRC, a2Rc)
   , FormA3(FormA3, a3FRT, a3FRA, a3FRB, a3Rc)

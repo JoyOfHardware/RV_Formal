@@ -88,6 +88,7 @@ library
     Decode,
     Opcodes,
     Forms,
+    OpcodeToForm,
     Util
   default-language: Haskell2010
 

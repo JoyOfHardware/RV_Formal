@@ -10,6 +10,7 @@ import Clash.Prelude
 import qualified Prelude as P
 
 import Util(powerIndex32, powerIndex64)
+import OpcodeToForm(opcodeToForm)
 
 
 getRsSlice insn = slice (powerIndex32 @0) (powerIndex32 @5) insn

@@ -32,10 +32,10 @@ bash build_gcc.sh
  - [ ] getForm :: Opcode -> Form
    - all fields will be populated of course!
  - [ ] audit behavior of ffil
- - [ ] Correct typo from 'FlagAbosolute' to 'FlagAbsolute'
- - [ ] rename `isa_generator` to `haskell_gen`
- - [ ] rename `isa_packed.csv` and remove uneeded columns
- - [ ] Perhaps update generator scripts to use Pandas
+
+# Notes
+
+ - [ ] Some forms may be redundant(may need to remove some)
 
 ## Readability Improvements
 - [ ] Need to improve readability of Haskell Code generators
@@ -73,4 +73,5 @@ pip3 install -r requirements.txt
 python3 extract_opcodes_to_haskell.py ../src/Opcodes.hs
 python3 extract_bitpat_to_haskell.py ../src/Decode.hs
 python3 generate_form_variants.py ../src/Forms.hs
+python3 generate_opcodeToForms.py ../src/OpcodeToForm.hs
 ```
