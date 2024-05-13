@@ -33,9 +33,15 @@ bash build_gcc.sh
    - all fields will be populated of course!
  - [ ] audit behavior of ffil
 
-# Notes
+# Grant Notes
 
  - [ ] Some forms may be redundant(may need to remove some)
+ - [ ] Some IBM documentation is not precise, for example, there
+       are many Z23 forms, not one.
+ - [ ] Some IBM documentation is incorrect, for example, the Z23
+       form of addex is missing from the Z23 form list.
+ - create exploratory HTML documentation from Haskell model(perhaps
+       using Elm!!)
 
 ## Readability Improvements
 - [ ] Need to improve readability of Haskell Code generators
