@@ -36,6 +36,7 @@ def convert_to_forms_with_fields(instruction_forms_df):
     forms_v_fields = {}
     forms_with_split_fields = []
     for index, form in enumerate(instruction_forms_df.Format):
+        form = form.capitalize()
         forms_v_fields[form]={}
         
         for field in instruction_forms_df.iloc[index, 1:].unique():
@@ -47,7 +48,7 @@ def convert_to_forms_with_fields(instruction_forms_df):
 
             bit_list = (instruction_forms_df.columns[instruction_forms_df.iloc[index, :] == field]).tolist()
             if is_consecutive(bit_list):
-                forms_v_fields[form][field] = (bit_list[0], bit_list[-1])
+                forms_v_fields[form][field.capitalize()] = (bit_list[0], bit_list[-1])
             
             else:
                 forms_with_split_fields += [form]
@@ -72,3 +73,4 @@ isa_packed_df = pd.read_csv(isa_packed_filename)
 # clean Haskell identifiers
 isa_packed_df['Mnemonic'] = isa_packed_df['Mnemonic'].apply(canonicalize_mnemonic)
 isa_packed_df['bitpat']   = isa_packed_df['bitpat'].apply(canonicalize_bitpat)
+isa_packed_df['FORMAT']   = isa_packed_df['FORMAT'].apply(lambda x : x.capitalize())

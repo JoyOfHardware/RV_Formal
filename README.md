@@ -29,6 +29,8 @@ bash build_gcc.sh
 ```
 
 # TODO
+ - [ ] all caps for form fields
+ - [ ] make sliceByField function
  - [ ] getForm :: Opcode -> Form
  - [ ] readRegs :: Form -> [Regs]
  - [ ] check all forms of same class have same start/end bits
@@ -91,6 +93,6 @@ mkdir isa_json
 python3 -m gen.json.gen_forms_and_field_mappings_json isa_json
 python3 -m gen.hs.extract_opcodes_to_haskell ./src/Opcodes.hs
 python3 -m gen.hs.extract_bitpat_to_haskell ./src/Decode.hs
-python3 -m gen.hs.generate_form_variants ./src/Forms.hs
+python3 -m gen.hs.generate_form_variants ./isa_json/field_v_slice.json  ./src/Forms.hs
 python3 -m gen.hs.generate_opcodeToForms ./src/OpcodeToForm.hs
 ```

@@ -5,7 +5,7 @@ mnemonic_form_pairs = list(zip(isa.isa_packed_df.Mnemonic, isa.isa_packed_df.FOR
 opcodes = []
 
 for mnemonic, form in mnemonic_form_pairs:
-    opcodes += [f"opcodeToForm {mnemonic:<23} = {form} Unpopulated"]
+    opcodes += [f"opcodeToForm {mnemonic:<23} = {form}"]
 
 generated_hs = \
 f'''{{-# LANGUAGE DataKinds #-}}
@@ -14,9 +14,7 @@ f'''{{-# LANGUAGE DataKinds #-}}
 module OpcodeToForm(opcodeToForm) where
 import Clash.Prelude
 import Opcodes(Opcode(..))
-import Forms(
-    Form(..),
-    FormState (Unpopulated))
+import Forms(Form(..))
 import Util(powerIndex32, powerIndex64)
 
 {'\n'.join(opcodes)}
