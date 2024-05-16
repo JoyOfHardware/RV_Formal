@@ -1,5 +1,5 @@
 import sys
-import isa
+from .. import isa
 
 generated_haskell_filename = sys.argv[1]
 

@@ -1,5 +1,5 @@
 import sys
-import isa
+from .. import isa
 
 mnemonic_form_pairs = list(zip(isa.isa_packed_df.Mnemonic, isa.isa_packed_df.FORMAT))
 opcodes = []

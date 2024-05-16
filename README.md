@@ -35,6 +35,13 @@ bash build_gcc.sh
    - all fields will be populated of course!
  - [ ] audit behavior of ffil
 
+# Organization Thoughts
+ - Potential functions
+   1. BitPat -> Opcode
+   2. Opcode -> Fields
+   3. Fields -> Field Vals
+   4. Field Vals -> Reg Vals
+
 # Thoroughness
  - [ ] Check that all forms get used!! Remove unused forms!!
 
@@ -82,8 +89,8 @@ cd hs_gen
 pip3 install -r requirements.txt
 mkdir isa_json
 python3 -m gen.json.gen_forms_and_field_mappings_json isa_json
-python3 extract_opcodes_to_haskell.py ../src/Opcodes.hs
-python3 extract_bitpat_to_haskell.py ../src/Decode.hs
-python3 generate_form_variants.py ../src/Forms.hs
-python3 generate_opcodeToForms.py ../src/OpcodeToForm.hs
+python3 -m gen.hs.extract_opcodes_to_haskell ./src/Opcodes.hs
+python3 -m gen.hs.extract_bitpat_to_haskell ./src/Decode.hs
+python3 -m gen.hs.generate_form_variants ./src/Forms.hs
+python3 -m gen.hs.generate_opcodeToForms ./src/OpcodeToForm.hs
 ```

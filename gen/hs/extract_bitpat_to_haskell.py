@@ -1,5 +1,5 @@
 import sys
-import isa
+from .. import isa
 
 decode = []
 for bitpat, mnemonic in zip(isa.isa_packed_df.bitpat, isa.isa_packed_df.Mnemonic):
