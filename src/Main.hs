@@ -8,6 +8,7 @@ module Main where
 
 import Clash.Prelude
 import qualified Prelude as P
+import Types(Pc)
 
 import Util(powerIndex32, powerIndex64)
 import OpcodeToForm(opcodeToForm)
@@ -29,13 +30,12 @@ memInit = [
   4,
   5]
 
-type PC = Unsigned 64
 type GPR = Vec 32 (Unsigned 64) -- General Purpose Registers page 10
 type Mem n = Vec n (Unsigned 32)
 
 
 data POWER_CPU = POWER_CPU
-  { pc :: PC,
+  { pc :: Pc,
     gpr :: GPR
   } deriving (Show)
 

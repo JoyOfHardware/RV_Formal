@@ -17,7 +17,7 @@ def process_ranges_with_mapping(input_dict):
                 label_counters[label] = {}
             if range_tuple not in label_counters[label]:
                 label_counters[label][range_tuple] = len(label_counters[label]) + 1
-            numbered_label = f"{label}{label_counters[label][range_tuple]}"
+            numbered_label = f"{label}_{label_counters[label][range_tuple]}"
             output_dict[key].append(numbered_label)
             mapping_dict[numbered_label] = range_tuple
     

@@ -89,7 +89,9 @@ library
     Opcodes,
     Forms,
     Fields,
+    ExtractField,
     OpcodeToForm,
+    Types,
     Util
   default-language: Haskell2010
 
