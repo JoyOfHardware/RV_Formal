@@ -30,11 +30,15 @@ bash build_gcc.sh
 
 # TODO
  - [ ] getForm :: Opcode -> Form
+ - [ ] readRegs :: Form -> [Regs]
+ - [ ] check all forms of same class have same start/end bits
    - all fields will be populated of course!
  - [ ] audit behavior of ffil
 
-# Grant Notes
+# Thoroughness
+ - [ ] Check that all forms get used!! Remove unused forms!!
 
+# Grant Notes
  - [ ] Some forms may be redundant(may need to remove some)
  - [ ] Some IBM documentation is not precise, for example, there
        are many Z23 forms, not one.
@@ -76,6 +80,8 @@ Run the following to re-generate the auto-generated Haskell sources.
 python3 -m venv .env
 cd hs_gen
 pip3 install -r requirements.txt
+mkdir isa_json
+python3 -m gen.json.gen_forms_and_field_mappings_json isa_json
 python3 extract_opcodes_to_haskell.py ../src/Opcodes.hs
 python3 extract_bitpat_to_haskell.py ../src/Decode.hs
 python3 generate_form_variants.py ../src/Forms.hs

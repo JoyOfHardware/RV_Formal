@@ -1,6 +1,7 @@
 stack.yaml.lock
 src/Main
 out/
+isa_json/
 odir/
 hidir/
 dist/

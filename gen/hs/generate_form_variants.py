@@ -1,45 +1,17 @@
 import sys
-from isa import instruction_forms_df
+import isa
 
 generated_haskell_filename = sys.argv[1]
 
-def is_consecutive(l):
-    # makes sure all elements in list are consecutive integers
-    diff = [(lhs - rhs) == 1 for lhs,rhs in zip(l[1:],l[:-1])]
-    for el in diff:
-        if not el:
-            return False
-    
-    return True
-
-form_dict = {}
-forms_with_split_fields = []
-for index, form in enumerate(instruction_forms_df.Format):
-    form_dict[form]={}
-    
-    for field in instruction_forms_df.iloc[index, 1:].unique():
-        
-        # skip 'dots', 'PO' which is the opcode field, or 'XO' 
-        # which is extended opcode
-        if field in {'.', 'XO', 'PO'}:
-            continue
-
-        bit_list = (instruction_forms_df.columns[instruction_forms_df.iloc[index, :] == field]).tolist()
-        if is_consecutive(bit_list):
-            form_dict[form][field] = (bit_list[0], bit_list[-1])
-        
-        else:
-            forms_with_split_fields += [form]
-
-def gen_hs(data):
+def gen_hs(forms_v_fields):
     form_definitions = []
     main_form = []
     export_list = []
 
     # Determine the maximum field name length for alignment
-    max_field_length = max(len(f"{form_name.lower()}{field_name}") for form_name, fields in data.items() for field_name, _ in fields.items())
+    max_field_length = max(len(f"{form_name.lower()}{field_name}") for form_name, fields in forms_v_fields.items() for field_name, _ in fields.items())
 
-    for form_name, fields in data.items():
+    for form_name, fields in forms_v_fields.items():
         fields_str = []
         field_exports = []
         for field_name, (start, end) in fields.items():
@@ -88,7 +60,7 @@ data Form
 
     return haskell_code
 
-haskell_code = gen_hs(form_dict)
+haskell_code = gen_hs(isa.forms_v_fields)
 
 with open(generated_haskell_filename, 'w') as f:
     f.write(haskell_code)
