@@ -16,3 +16,4 @@ python3 -m gen.json.gen_forms_and_field_mappings_json isa_json
 python3 -m gen.hs.generate_forms ./isa_json/forms_v_fields.json  ./src/Forms.hs
 python3 -m gen.hs.generate_fields ./isa_json/field_v_slice.json  ./src/Fields.hs
 python3 -m gen.hs.generate_opcodeToForms ./src/OpcodeToForm.hs
+python3 -m gen.hs.extract_fields ./isa_json/field_v_slice.json ./src/ExtractField.hs
