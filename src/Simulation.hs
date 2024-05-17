@@ -48,6 +48,14 @@ machine' machine@(
 machineSignal :: HiddenClockResetEnable dom => Signal dom Machine
 machineSignal = register machine (machine' <$> machineSignal)
 
--- Simulate the first 5 states
-simulation :: [Machine]
-simulation = sampleN @System 5 machineSignal
+simulationLoop :: Int -> Machine -> IO [Machine]
+simulationLoop 0 state = return [state]
+simulationLoop n state = do
+  let newState = machine' state
+  rest <- simulationLoop (n - 1) newState
+  return (state : rest)
+
+simulation :: IO [Machine]
+simulation = do
+  let initState = machine
+  simulationLoop 5 initState

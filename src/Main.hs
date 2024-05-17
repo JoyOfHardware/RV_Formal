@@ -12,7 +12,9 @@ import Simulation(simulation)
 
 main :: IO ()
 main = do
+  states <- simulation
   putStrLn "Simulating Machine"
   -- mapM_ (putStrLn . ppShow) simulation
-  putStrLn $ "executed for " ++ show (length simulation) ++ " cycles"
+  putStrLn $ "last state" ++ show (last states)
+  putStrLn $ "executed for " ++ show (length states) ++ " cycles"
   putStrLn "Simulation complete"
