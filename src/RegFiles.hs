@@ -22,4 +22,4 @@ gprInit =
     Nil
 
 msrInit :: Unsigned 64
-msrInit = 0
+msrInit = 1

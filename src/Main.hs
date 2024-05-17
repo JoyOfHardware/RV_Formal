@@ -6,13 +6,25 @@
 module Main where
 
 import Clash.Prelude
+    ( Num((+)),
+      Integer,
+      IO,
+      (<$>),
+      register,
+      sampleN,
+      replace,
+      HiddenClockResetEnable,
+      Signal,
+      System )
+import Prelude
 import Machine(
   Machine(..),
   POWER_CPU(..),
   machineInit)
 import Fetch(fetchInstruction)
 import Text.Show.Pretty (ppShow)
-import qualified Prelude as P
+import Text.Printf (printf)
+-- import qualified Prelude as P
 import Decode(decode)
 
 import Debug.Trace
@@ -32,6 +44,11 @@ machine' machine@(
     mem = mem }) =
   let
     -- get current instruction
+    -- instruction = 
+    --   traceShow 
+    --     (printf "0x%X" (toInteger v) :: String) 
+    --     v
+    --   where v = fetchInstruction mem msr pc
     instruction = traceShow (decode v) v
       where v = fetchInstruction mem msr pc
     addr = 0 :: Integer
@@ -53,5 +70,6 @@ main :: IO ()
 main = do
   putStrLn "Simulating Machine"
   -- mapM_ (putStrLn . ppShow) simResults
-  putStrLn $ ppShow (P.last simResults)
+  -- putStrLn $ ppShow $ P.last simResults
+  putStrLn $ "executed for " ++ show (length simResults) ++ " cycles"
   putStrLn "Simulation complete"
