@@ -14,12 +14,7 @@ type GPR = Vec 32 (Unsigned 64) -- General Purpose Registers page 10
 type MSR = Unsigned 64
 
 gprInit :: GPR
-gprInit = 
-    0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :>
-    0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :>
-    0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :>
-    0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :>
-    Nil
+gprInit = repeat 0
 
 -- TODO : set/get functions for fields in MSR
 -- and other registers

@@ -91,6 +91,7 @@ library
     Decode.Fields,
     Decode.ExtractField,
     Decode.OpcodeToForm,
+    Simulation,
     Types,
     Machine,
     RegFiles,
