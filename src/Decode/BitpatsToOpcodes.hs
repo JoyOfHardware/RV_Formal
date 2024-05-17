@@ -3,10 +3,10 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE NumericUnderscores #-}
 
-module BitpatsToOpcodes(bitpatToOpcode) where
+module Decode.BitpatsToOpcodes(bitpatToOpcode) where
 
 import Clash.Prelude
-import Opcodes(Opcode(..))
+import Decode.Opcodes(Opcode(..))
 
 bitpatToOpcode :: Unsigned 32 -> Maybe Opcode
 bitsToOpcode $(bitPattern "111111....................11101.") = Just FmaddDot

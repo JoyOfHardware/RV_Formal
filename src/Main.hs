@@ -25,7 +25,7 @@ import Fetch(fetchInstruction)
 import Text.Show.Pretty (ppShow)
 import Text.Printf (printf)
 -- import qualified Prelude as P
-import BitpatsToOpcodes(bitpatToOpcode)
+import Decode.BitpatsToOpcodes(bitpatToOpcode)
 
 import Debug.Trace
 
@@ -70,6 +70,7 @@ main :: IO ()
 main = do
   putStrLn "Simulating Machine"
   -- mapM_ (putStrLn . ppShow) simResults
+  mapM_ print simResults
   -- putStrLn $ ppShow $ P.last simResults
   putStrLn $ "executed for " ++ show (length simResults) ++ " cycles"
   putStrLn "Simulation complete"

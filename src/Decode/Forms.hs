@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE NumericUnderscores #-}
 
-module Forms(Form(..)) where
+module Decode.Forms(Form(..)) where
 import Clash.Prelude
 
 data Form

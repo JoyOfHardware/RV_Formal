@@ -85,12 +85,12 @@ library
   exposed-modules:
     Main
   other-modules:
-    BitpatsToOpcodes,
-    Opcodes,
-    Forms,
-    Fields,
-    ExtractField,
-    OpcodeToForm,
+    Decode.BitpatsToOpcodes,
+    Decode.Opcodes,
+    Decode.Forms,
+    Decode.Fields,
+    Decode.ExtractField,
+    Decode.OpcodeToForm,
     Types,
     Machine,
     RegFiles,

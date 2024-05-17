@@ -21,5 +21,7 @@ gprInit =
     0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :> 0 :>
     Nil
 
+-- TODO : set/get functions for fields in MSR
+-- and other registers
 msrInit :: Unsigned 64
 msrInit = 1

@@ -1,10 +1,10 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE NumericUnderscores #-}
 
-module ExtractField(populateField) where
+module Decode.ExtractField(populateField) where
 
 import Clash.Prelude
-import Fields(UnpopulatedField(..), PopulatedField(..))
+import Decode.Fields(UnpopulatedField(..), PopulatedField(..))
 import Util(powerIndex32)
 import Types(Insn)
 
