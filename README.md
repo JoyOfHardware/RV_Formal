@@ -87,13 +87,5 @@ that reads in POWER ISA information in machine format from a CSV.
 
 Run the following to re-generate the auto-generated Haskell sources.
 ```bash
-python3 -m venv .env
-cd hs_gen
-pip3 install -r requirements.txt
-mkdir isa_json
-python3 -m gen.json.gen_forms_and_field_mappings_json isa_json
-python3 -m gen.hs.extract_opcodes_to_haskell ./src/Opcodes.hs
-python3 -m gen.hs.extract_bitpat_to_haskell ./src/Decode.hs
-python3 -m gen.hs.generate_form_variants ./isa_json/field_v_slice.json  ./src/Forms.hs
-python3 -m gen.hs.generate_opcodeToForms ./src/OpcodeToForm.hs
+bash gen.sh
 ```

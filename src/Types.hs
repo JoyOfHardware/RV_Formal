@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE NumericUnderscores #-}
 
-module Types(Pc, Insn, BusVal(..)) where
+module Types(Pc, Insn, BusVal(..), Mem) where
 
 import Clash.Prelude
 
@@ -21,3 +21,4 @@ data BusVal
 
 type Pc   = Unsigned 64
 type Insn = Unsigned 32
+type Mem n = Vec n (Unsigned 32)
