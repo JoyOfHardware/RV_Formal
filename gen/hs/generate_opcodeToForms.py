@@ -11,10 +11,10 @@ generated_hs = \
 f'''{{-# LANGUAGE DataKinds #-}}
 {{-# LANGUAGE NumericUnderscores #-}}
 
-module OpcodeToForm(opcodeToForm) where
+module Decode.OpcodeToForm(opcodeToForm) where
 import Clash.Prelude
-import Opcodes(Opcode(..))
-import Forms(Form(..))
+import Decode.Opcodes(Opcode(..))
+import Decode.Forms(Form(..))
 import Util(powerIndex32, powerIndex64)
 
 {'\n'.join(opcodes)}

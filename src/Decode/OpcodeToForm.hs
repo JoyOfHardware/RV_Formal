@@ -2,7 +2,6 @@
 {-# LANGUAGE NumericUnderscores #-}
 
 module Decode.OpcodeToForm(opcodeToForm) where
-
 import Clash.Prelude
 import Decode.Opcodes(Opcode(..))
 import Decode.Forms(Form(..))

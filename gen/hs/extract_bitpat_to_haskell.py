@@ -3,7 +3,7 @@ from .. import isa
 
 decode = []
 for bitpat, mnemonic in zip(isa.isa_packed_df.bitpat, isa.isa_packed_df.Mnemonic):
-    decode += [f'bitsToOpcode $(bitPattern "{bitpat}") = Just {mnemonic}']
+    decode += [f'bitpatToOpcode $(bitPattern "{bitpat}") = Just {mnemonic}']
 
 generated_hs = \
 f'''{{-# LANGUAGE ViewPatterns #-}}
@@ -11,10 +11,10 @@ f'''{{-# LANGUAGE ViewPatterns #-}}
 {{-# LANGUAGE DataKinds #-}}
 {{-# LANGUAGE NumericUnderscores #-}}
 
-module BitpatsToOpcodes(bitpatToOpcode) where
+module Decode.BitpatsToOpcodes(bitpatToOpcode) where
 
 import Clash.Prelude
-import Opcodes(Opcode(..))
+import Decode.Opcodes(Opcode(..))
 
 bitpatToOpcode :: Unsigned 32 -> Maybe Opcode
 {'\n'.join(decode)}

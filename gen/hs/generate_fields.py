@@ -32,7 +32,7 @@ generated_hs = \
 f'''{{-# LANGUAGE DataKinds #-}}
 {{-# LANGUAGE NumericUnderscores #-}}
 
-module Fields(UnpopulatedField(..), PopulatedField(..)) where
+module Decode.Fields(UnpopulatedField(..), PopulatedField(..)) where
 import Clash.Prelude
 
 data UnpopulatedField
