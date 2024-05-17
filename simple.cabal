@@ -85,7 +85,7 @@ library
   exposed-modules:
     Main
   other-modules:
-    Decode,
+    BitpatsToOpcodes,
     Opcodes,
     Forms,
     Fields,

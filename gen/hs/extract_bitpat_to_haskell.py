@@ -3,7 +3,7 @@ from .. import isa
 
 decode = []
 for bitpat, mnemonic in zip(isa.isa_packed_df.bitpat, isa.isa_packed_df.Mnemonic):
-    decode += [f'decode $(bitPattern "{bitpat}") = Just {mnemonic}']
+    decode += [f'bitsToOpcode $(bitPattern "{bitpat}") = Just {mnemonic}']
 
 generated_hs = \
 f'''{{-# LANGUAGE ViewPatterns #-}}
@@ -11,14 +11,14 @@ f'''{{-# LANGUAGE ViewPatterns #-}}
 {{-# LANGUAGE DataKinds #-}}
 {{-# LANGUAGE NumericUnderscores #-}}
 
-module Decode(decode) where
+module BitpatsToOpcodes(bitpatToOpcode) where
 
 import Clash.Prelude
 import Opcodes(Opcode(..))
 
-decode :: Unsigned 32 -> Maybe Opcode
+bitpatToOpcode :: Unsigned 32 -> Maybe Opcode
 {'\n'.join(decode)}
-decode _ = Nothing
+bitpatToOpcode _ = Nothing
 '''
 
 # Let's create an write out Haskell file to the second argument

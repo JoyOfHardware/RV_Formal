@@ -25,7 +25,7 @@ import Fetch(fetchInstruction)
 import Text.Show.Pretty (ppShow)
 import Text.Printf (printf)
 -- import qualified Prelude as P
-import Decode(decode)
+import BitpatsToOpcodes(bitpatToOpcode)
 
 import Debug.Trace
 
@@ -49,7 +49,7 @@ machine' machine@(
     --     (printf "0x%X" (toInteger v) :: String) 
     --     v
     --   where v = fetchInstruction mem msr pc
-    instruction = traceShow (decode v) v
+    instruction = traceShow (bitpatToOpcode v) v
       where v = fetchInstruction mem msr pc
     addr = 0 :: Integer
     mem' = replace addr (instruction + 1) mem
