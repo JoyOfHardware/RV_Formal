@@ -1,12 +1,13 @@
 import sys
-import isa
+from .. import isa
 
 decode = []
 for bitpat, mnemonic in zip(isa.isa_packed_df.bitpat, isa.isa_packed_df.Mnemonic):
     decode += [f'decode $(bitPattern "{bitpat}") = Just {mnemonic}']
 
 generated_hs = \
-f'''{{-# LANGUAGE RecordWildCards #-}}
+f'''{{-# LANGUAGE ViewPatterns #-}}
+{{-# LANGUAGE RecordWildCards #-}}
 {{-# LANGUAGE DataKinds #-}}
 {{-# LANGUAGE NumericUnderscores #-}}
 

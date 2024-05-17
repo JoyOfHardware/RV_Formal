@@ -29,13 +29,34 @@ bash build_gcc.sh
 ```
 
 # TODO
+ - [ ] fetch should invoke mem read function
+ - [ ] all caps for form fields
+ - [ ] make sliceByField function
  - [ ] getForm :: Opcode -> Form
+ - [ ] readRegs :: Form -> [Regs]
+ - [ ] check all forms of same class have same start/end bits
+ - [ ] Write efficient PO-XO based decoder
    - all fields will be populated of course!
  - [ ] audit behavior of ffil
- - [ ] Correct typo from 'FlagAbosolute' to 'FlagAbsolute'
- - [ ] rename `isa_generator` to `haskell_gen`
- - [ ] rename `isa_packed.csv` and remove uneeded columns
- - [ ] Perhaps update generator scripts to use Pandas
+
+# Organization Thoughts
+ - Potential functions
+   1. BitPat -> Opcode
+   2. Opcode -> Fields
+   3. Fields -> Field Vals
+   4. Field Vals -> Reg Vals
+
+# Thoroughness
+ - [ ] Check that all forms get used!! Remove unused forms!!
+
+# Grant Notes
+ - [ ] Some forms may be redundant(may need to remove some)
+ - [ ] Some IBM documentation is not precise, for example, there
+       are many Z23 forms, not one.
+ - [ ] Some IBM documentation is incorrect, for example, the Z23
+       form of addex is missing from the Z23 form list.
+ - create exploratory HTML documentation from Haskell model(perhaps
+       using Elm!!)
 
 ## Readability Improvements
 - [ ] Need to improve readability of Haskell Code generators
@@ -67,10 +88,5 @@ that reads in POWER ISA information in machine format from a CSV.
 
 Run the following to re-generate the auto-generated Haskell sources.
 ```bash
-python3 -m venv .env
-cd hs_gen
-pip3 install -r requirements.txt
-python3 extract_opcodes_to_haskell.py ../src/Opcodes.hs
-python3 extract_bitpat_to_haskell.py ../src/Decode.hs
-python3 generate_form_variants.py ../src/Forms.hs
+bash gen.sh
 ```
