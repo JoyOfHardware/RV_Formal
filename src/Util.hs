@@ -6,9 +6,10 @@
 module Util(
   powerIndex32,
   powerIndex64,
-  endianSwap) where
+  endianSwapWord) where
 
 import Clash.Prelude
+import Types(FullWord)
 
 data ValidIndex32 (n :: Nat) where
   ValidIndex32 :: (0 <= n, n <= 31) => SNat n -> ValidIndex32 n
@@ -30,11 +31,12 @@ powerIndex64 :: forall n. (KnownNat n, 0 <= n, n <= 63) => SNat (63 - n)
 powerIndex64 = case mkValidIndex64 @n of
   ValidIndex63 _ -> SNat @(63 - n)
 
-endianSwap :: Unsigned 32 -> Unsigned 32
-endianSwap x = (byte0 `shiftL` 24) .|.
-               (byte1 `shiftL` 16) .|.
-               (byte2 `shiftL` 8)  .|.
-               byte3
+endianSwapWord :: FullWord -> FullWord
+endianSwapWord x = 
+  (byte0 `shiftL` 24) .|.
+  (byte1 `shiftL` 16) .|.
+  (byte2 `shiftL` 8)  .|.
+  byte3
   where
     byte0 = (x .&. 0x000000FF)
     byte1 = (x .&. 0x0000FF00) `shiftR` 8

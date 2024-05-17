@@ -71,7 +71,7 @@ common common-options
     ghc-typelits-extra,
     ghc-typelits-knownnat,
     mtl,
-    GenericPretty==1.2.2
+    pretty-show
 
 custom-setup
   setup-depends:
@@ -94,6 +94,7 @@ library
     Types,
     Machine,
     RegFiles,
+    Fetch,
     Util
   default-language: Haskell2010
 
