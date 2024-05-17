@@ -34,6 +34,7 @@ bash build_gcc.sh
  - [ ] getForm :: Opcode -> Form
  - [ ] readRegs :: Form -> [Regs]
  - [ ] check all forms of same class have same start/end bits
+ - [ ] Write efficient PO-XO based decoder
    - all fields will be populated of course!
  - [ ] audit behavior of ffil
 
