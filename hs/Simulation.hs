@@ -5,6 +5,8 @@
 
 module Simulation(simulation) where
 
+import Peripherals.Setup(setupPeripherals)
+import Peripherals.Teardown(teardownPeripherals)
 import Text.Printf (printf)
 import Clash.Prelude
 import Machine(
@@ -13,6 +15,7 @@ import Machine(
   machineInit)
 import Fetch(fetchInstruction)
 import Decode.BitpatsToOpcodes(bitpatToOpcode)
+import Control.Concurrent (threadDelay)
 
 import Debug.Trace
 
@@ -51,11 +54,15 @@ machineSignal = register machine (machine' <$> machineSignal)
 simulationLoop :: Int -> Machine -> IO [Machine]
 simulationLoop 0 state = return [state]
 simulationLoop n state = do
+  threadDelay 1000000  -- Delay for 1 second (1,000,000 microseconds)
   let newState = machine' state
   rest <- simulationLoop (n - 1) newState
   return (state : rest)
 
 simulation :: IO [Machine]
 simulation = do
+  setupPeripherals
   let initState = machine
-  simulationLoop 5 initState
+  sim <- simulationLoop 5 initState
+  teardownPeripherals
+  return sim

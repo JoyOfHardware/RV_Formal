@@ -4,7 +4,7 @@ all: run
 out/$(MAIN):
 	mkdir -p out
 	stack run clash -- --make \
-	src/$(MAIN).hs \
+	hs/$(MAIN).hs \
 	-main-is $(MAIN) \
 	-isrc \
 	-odir=odir/ \

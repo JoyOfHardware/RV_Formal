@@ -81,8 +81,9 @@ custom-setup
 
 library
   import: common-options
-  hs-source-dirs: src
+  hs-source-dirs: hs
   exposed-modules:
+    Simulation,
     Main
   other-modules:
     Decode.BitpatsToOpcodes,
@@ -91,12 +92,16 @@ library
     Decode.Fields,
     Decode.ExtractField,
     Decode.OpcodeToForm,
-    Simulation,
+    Peripherals.UartCFFI,
+    Peripherals.Setup,
+    Peripherals.Teardown,
     Types,
     Machine,
     RegFiles,
     Fetch,
     Util
+  c-sources: csrc/uart_sim_device.c
+  include-dirs: csrc
   default-language: Haskell2010
 
 -- Builds the executable 'clash', with simple project in scope
@@ -141,4 +146,4 @@ test-suite test-library
     hedgehog,
     tasty >= 1.2 && < 1.5,
     tasty-hedgehog,
-    tasty-th,
+    tasty-th
