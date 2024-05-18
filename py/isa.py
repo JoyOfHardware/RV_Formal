@@ -2,8 +2,8 @@ import pandas as pd
 import re
 from pathlib import Path
 
-script_path = Path(__file__).resolve().parent
-script_dir = script_path.parent
+repo_root_path = Path(__file__).resolve().parent.parent
+script_dir = repo_root_path.parent
 
 
 def canonicalize_mnemonic(mnemonic):
@@ -59,8 +59,8 @@ def convert_to_forms_with_fields(instruction_forms_df):
 def canonicalize_bitpat(bitpat):
     return bitpat.replace(' ', '').replace('/', '.')
 
-isa_packed_filename = script_path/'tables/isa.csv'
-instruction_forms_filename = script_path/'tables/instruction_forms.xlsx'
+isa_packed_filename = repo_root_path/'tables/isa.csv'
+instruction_forms_filename = repo_root_path/'tables/instruction_forms.xlsx'
 
 instruction_forms_df = pd.read_excel(
     instruction_forms_filename,

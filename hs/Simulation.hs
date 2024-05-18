@@ -5,6 +5,8 @@
 
 module Simulation(simulation) where
 
+import Peripherals.Setup(setupPeripherals)
+import Peripherals.Teardown(teardownPeripherals)
 import Text.Printf (printf)
 import Clash.Prelude
 import Machine(
@@ -12,7 +14,9 @@ import Machine(
   POWER_CPU(..),
   machineInit)
 import Fetch(fetchInstruction)
+import Peripherals.UartCFFI(writeCharToTerminal)
 import Decode.BitpatsToOpcodes(bitpatToOpcode)
+import Control.Concurrent (threadDelay)
 
 import Debug.Trace
 
@@ -57,5 +61,13 @@ simulationLoop n state = do
 
 simulation :: IO [Machine]
 simulation = do
+  setupPeripherals
+
+  -- quick smoketest that UART works - remove later
+  writeCharToTerminal 'a'
+  threadDelay 1000000  -- Delay for 1 second (1,000,000 microseconds)
+
   let initState = machine
-  simulationLoop 5 initState
+  sim <- simulationLoop 5 initState
+  teardownPeripherals
+  return sim

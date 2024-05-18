@@ -1,5 +1,5 @@
 packages:
-  simple.cabal
+  ppc_formal.cabal
 
 packages: .
 builddir: build
