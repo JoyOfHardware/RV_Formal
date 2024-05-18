@@ -99,8 +99,8 @@ library
     RegFiles,
     Fetch,
     Util
-  c-sources: csrc/uart_sim_device.c
-  include-dirs: csrc
+  c-sources: c/uart_sim_device.c
+  include-dirs: c
   default-language: Haskell2010
 
 -- Builds the executable 'clash', with simple project in scope
@@ -128,7 +128,7 @@ executable main
     base,
     clash-ghc,
     simple
-  c-sources: csrc/uart_sim_device.c
-  include-dirs: csrc
+  c-sources: c/uart_sim_device.c
+  include-dirs: c
   if !os(Windows)
     ghc-options: -dynamic

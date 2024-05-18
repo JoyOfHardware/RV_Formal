@@ -1,6 +1,7 @@
 set -ex
 
 # dependencies
+# TODO : re-enable the following
 # python3 -m venv .env
 # source .env/bin/activate
 # pushd hs_gen
@@ -8,12 +9,12 @@ set -ex
 # popd
 
 # generate
-rm -rf isa_json
-mkdir -p isa_json
-python3 -m gen.json.gen_forms_and_field_mappings_json isa_json
-python3 -m gen.hs.extract_opcodes_to_haskell ./src/Decode/Opcodes.hs
-python3 -m gen.hs.extract_bitpat_to_haskell ./src/Decode/BitpatsToOpcodes.hs
-python3 -m gen.hs.generate_forms ./isa_json/forms_v_fields.json  ./src/Decode/Forms.hs
-python3 -m gen.hs.generate_fields ./isa_json/field_v_slice.json  ./src/Decode/Fields.hs
-python3 -m gen.hs.generate_opcodeToForms ./src/Decode/OpcodeToForm.hs
-python3 -m gen.hs.extract_fields ./isa_json/field_v_slice.json ./src/Decode/ExtractField.hs
+rm -rf out
+mkdir -p out
+python3 -m py.gen_json.gen_forms_and_field_mappings_json out
+python3 -m py.gen_hs.extract_opcodes_to_haskell ./hs/Decode/Opcodes.hs
+python3 -m py.gen_hs.extract_bitpat_to_haskell ./hs/Decode/BitpatsToOpcodes.hs
+python3 -m py.gen_hs.generate_forms ./out/forms_v_fields.json  ./hs/Decode/Forms.hs
+python3 -m py.gen_hs.generate_fields ./out/field_v_slice.json  ./hs/Decode/Fields.hs
+python3 -m py.gen_hs.generate_opcodeToForms ./hs/Decode/OpcodeToForm.hs
+python3 -m py.gen_hs.extract_fields ./out/field_v_slice.json ./hs/Decode/ExtractField.hs
