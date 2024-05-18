@@ -13,7 +13,7 @@ Note that this repository is currently very much W.I.P. That being said,
 this is how you would currently run a simulation:
 
 ```bash
-cabal run main
+cabal run main --ghc-options="-D_RAM_DEPTH=2048" -- --firmware=boot.bin
 ```
 
 # Notes

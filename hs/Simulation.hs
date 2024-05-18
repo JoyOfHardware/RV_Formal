@@ -3,7 +3,7 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE ConstraintKinds #-}
 
-module Simulation(simulation) where
+module Simulation(Args(..), simulation) where
 
 import Peripherals.Setup(setupPeripherals)
 import Peripherals.Teardown(teardownPeripherals)
@@ -19,6 +19,10 @@ import Decode.BitpatsToOpcodes(bitpatToOpcode)
 import Control.Concurrent (threadDelay)
 
 import Debug.Trace
+
+data Args = Args {
+    firmware :: FilePath
+    } deriving (Show)
 
 machine :: Machine
 machine = machineInit
@@ -59,8 +63,8 @@ simulationLoop n state = do
   rest <- simulationLoop (n - 1) newState
   return (state : rest)
 
-simulation :: IO [Machine]
-simulation = do
+simulation :: Args -> IO [Machine]
+simulation args = do
   setupPeripherals
 
   -- quick smoketest that UART works - remove later

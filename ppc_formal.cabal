@@ -70,6 +70,8 @@ common common-options
     ghc-typelits-natnormalise,
     ghc-typelits-extra,
     ghc-typelits-knownnat,
+    binary,
+    bytestring,
     mtl,
     pretty-show
 
@@ -91,6 +93,7 @@ library
     Decode.Fields,
     Decode.ExtractField,
     Decode.OpcodeToForm,
+    Peripherals.Ram,
     Peripherals.UartCFFI,
     Peripherals.Setup,
     Peripherals.Teardown,
