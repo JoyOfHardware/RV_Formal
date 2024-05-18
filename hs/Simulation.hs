@@ -14,6 +14,7 @@ import Machine(
   POWER_CPU(..),
   machineInit)
 import Fetch(fetchInstruction)
+import Peripherals.UartCFFI(writeCharToTerminal)
 import Decode.BitpatsToOpcodes(bitpatToOpcode)
 import Control.Concurrent (threadDelay)
 
@@ -54,7 +55,6 @@ machineSignal = register machine (machine' <$> machineSignal)
 simulationLoop :: Int -> Machine -> IO [Machine]
 simulationLoop 0 state = return [state]
 simulationLoop n state = do
-  threadDelay 1000000  -- Delay for 1 second (1,000,000 microseconds)
   let newState = machine' state
   rest <- simulationLoop (n - 1) newState
   return (state : rest)
@@ -62,6 +62,11 @@ simulationLoop n state = do
 simulation :: IO [Machine]
 simulation = do
   setupPeripherals
+
+  -- quick smoketest that UART works - remove later
+  writeCharToTerminal 'a'
+  threadDelay 1000000  -- Delay for 1 second (1,000,000 microseconds)
+
   let initState = machine
   sim <- simulationLoop 5 initState
   teardownPeripherals

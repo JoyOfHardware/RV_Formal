@@ -13,7 +13,7 @@ Note that this repository is currently very much W.I.P. That being said,
 this is how you would currently run a simulation:
 
 ```bash
-$MAIN=Main make
+cabal run main
 ```
 
 # Notes
@@ -67,20 +67,11 @@ bash build_gcc.sh
        intermediate outputs from littering source tree
  - [ ] enable Phoityne debug
  - [ ] learn to use trace and jupyter
- - [ ] learn to debug with generic pretty prints
  - [ ] draw conclusions on feasibility of debugging
        without VCD viewer
 
 ## Binary Dev and Firmware Testing
  - [ ] Write test in Rust ppc baremetal toolchain
- - [ ] Move Python Haskell generators into codebase
-
-# Considerations for FPGA Implementation
- - [ ] `Opcode -> PackedField` function should have intermediate
-       step that specifies how to slice instruction bitpat to
-       generate/populate sub-fields of a specific form - to the
-       end that more efficient logic is generated for/during
-       synthesis.
 
 # Generating Haskell Opcodes, Forms, Decoder, and Populated Forms
 Some of the Haskell sources are auto-generated using a Python script
