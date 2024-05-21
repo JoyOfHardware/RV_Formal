@@ -6,10 +6,15 @@
 module Util(
   powerIndex32,
   powerIndex64,
-  endianSwapWord) where
+  endianSwapWord,
+  unsigned128ToBytes,
+  unsigned128ToWords,
+  unsigned128ToDoubleWords,
+  fullWordsToQuadWords) where
 
 import Clash.Prelude
 import Types(FullWord)
+import Text.Printf (printf)
 
 data ValidIndex32Bit (n :: Nat) where
   ValidIndex32Bit :: (0 <= n, n <= 31) => SNat n -> ValidIndex32Bit n
@@ -49,3 +54,21 @@ unsigned128ToWords = bitCoerce
 
 unsigned128ToDoubleWords :: Unsigned 128 -> Vec 2 (Unsigned 64)
 unsigned128ToDoubleWords = bitCoerce
+
+fullWordsToQuadWords :: KnownNat n => Vec (n * 4) (Unsigned 32) -> Vec n (Unsigned 128)
+fullWordsToQuadWords = bitCoerce
+
+printHex128 :: Unsigned 128 -> String
+printHex128 x = printf "0x%032x" (toInteger x)
+
+printHex64 :: Unsigned 64 -> String
+printHex64 x = printf "0x%016x" (toInteger x)
+
+printHex32 :: Unsigned 32 -> String
+printHex32 x = printf "0x%08x" (toInteger x)
+
+printHex16 :: Unsigned 16 -> String
+printHex16 x = printf "0x%04x" (toInteger x)
+
+printHex8 :: Unsigned 8 -> String
+printHex8 x = printf "0x%02x" (toInteger x)
