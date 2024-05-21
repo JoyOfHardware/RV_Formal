@@ -8,6 +8,7 @@ import Peripherals.Setup(setupPeripherals, InitializedPeripherals(..))
 import Peripherals.Teardown(teardownPeripherals)
 import Text.Printf (printf)
 import Clash.Prelude
+import qualified Prelude as P
 import Machine(
   Machine(..),
   POWER_CPU(..),
@@ -16,6 +17,7 @@ import Fetch(fetchInstruction)
 import Peripherals.UartCFFI(writeCharToTerminal)
 import Decode.BitpatsToOpcodes(bitpatToOpcode)
 import Control.Concurrent (threadDelay)
+import Util(showHex128)
 
 import Debug.Trace
 
@@ -69,7 +71,8 @@ simulation args = do
   initializedPeripherals <- setupPeripherals (firmware args)
   case initializedPeripherals of
     InitializationError e -> return $ Failure e
-    InitializedPeripherals _ -> do
+    InitializedPeripherals ram -> do
+      mapM_ putStrLn $ P.map showHex128 $ P.take 10 $ toList ram
       -- TODO : remove quick smoketest that UART works later
       writeCharToTerminal 'a'
       threadDelay 1000000  -- Delay for 1 second (1,000,000 microseconds)
