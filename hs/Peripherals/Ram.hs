@@ -3,7 +3,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Peripherals.Ram() where
+module Peripherals.Ram(
+  Ram,
+  ramDepth,
+  initRamFromFile,
+) where
 
 import Clash.Prelude
 import qualified Prelude as P
@@ -11,6 +15,8 @@ import qualified Data.ByteString.Lazy as BL
 import Data.Binary.Get
 import Data.Int (Int32)
 import qualified Clash.Sized.Vector as Vec
+import Bus(Request(..), Resp(..))
+import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
 
 -- vector depth has to be known statically at compile time
 #ifndef _RAM_DEPTH
@@ -19,6 +25,19 @@ import qualified Clash.Sized.Vector as Vec
 
 -- TODO : replace Unsigned 32 with BusVal types later...
 type Ram = Vec _RAM_DEPTH (Unsigned 32)
+
+ramDepth :: Int
+ramDepth = _RAM_DEPTH
+
+ramWidth :: Int
+ramWidth = 32
+
+-- read :: Request -> Ram -> Resp
+-- read request ram = 
+--   case request of
+--     ReqByte addr -> RespByte $ ram Vec.!! (fromIntegral addr)
+--     ReqHalfWord addr -> RespHalfWord $ ram Vec.!! (fromIntegral addr)
+--     ReqWord addr -> RespWord $ ram Vec.!! (fromIntegral addr)
 
 initRamFromFile :: FilePath -> IO (Maybe Ram)
 initRamFromFile filePath = 
@@ -58,36 +77,3 @@ populateVectorFromInt32 ls v = Vec.fromList adjustedLs
     adjustedLs = fromIntegral <$> adjustLength vecLen ls
     adjustLength :: Int -> [Int32] -> [Int32]
     adjustLength n xs = P.take n (xs P.++ P.repeat 0)
-
-
-
--- Function to increment each element of a Clash vector
--- prepareVector :: KnownNat n => [Int32] -> Vec n (Unsigned 32)
--- prepareVector xs = let
---   unsigneds = map (fromIntegral :: Int32 -> Unsigned 32) xs  -- Step 1: Convert Int32 to Unsigned 32
---   len = length unsigneds
---   in case compare len (snatToNum (SNat @n)) of  -- Step 2: Adjust the length of the list
---       LT -> takeI unsigneds ++ repeat 0  -- Pad with zeros if the list is shorter
---       GT -> takeI unsigneds  -- Truncate if the list is longer
---       EQ -> takeI unsigneds  -- No padding or truncation needed
-
--- Function to load firmware
--- loadFirmware :: KnownNat n => [Int32] -> Vec n (Unsigned 32)
--- loadFirmware (x:xs) = vecHead ++ vecTail
---     where
---         vecHead = singleton (fromIntegral x)
---         vecTail = loadFirmware xs
--- loadFirmware [] = takeI $ repeat 0
-
--- loadFirmware xs = v 
---     where 
---         mapped :: [Unsigned 32] = Clash.Prelude.fromIntegral <$> xs
---         c = takeI (mapped ++ repeat 0)
---         v = takeI $ (mapped ++ repeat 0)
-
--- -- Example usage
--- someList :: [Int32]
--- someList = [1, 2, 3, 4, 5]
-
--- mem :: Vec 16 (Unsigned 32)
--- mem = loadFirmware someList

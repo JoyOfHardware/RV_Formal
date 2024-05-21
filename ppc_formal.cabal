@@ -86,7 +86,8 @@ library
   hs-source-dirs: hs
   exposed-modules:
     Simulation
-  other-modules:
+  -- TODO: production should enable other-modules
+  -- other-modules:
     Decode.BitpatsToOpcodes,
     Decode.Opcodes,
     Decode.Forms,
@@ -97,6 +98,7 @@ library
     Peripherals.UartCFFI,
     Peripherals.Setup,
     Peripherals.Teardown,
+    Bus,
     Types,
     Machine,
     RegFiles,

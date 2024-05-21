@@ -1,4 +1,3 @@
-{-# LANGUAGE GADTs #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE ConstraintKinds #-}
@@ -65,7 +64,7 @@ simulationLoop n state = do
 
 simulation :: Args -> IO [Machine]
 simulation args = do
-  setupPeripherals
+  setupPeripherals (firmware args)
 
   -- quick smoketest that UART works - remove later
   writeCharToTerminal 'a'
