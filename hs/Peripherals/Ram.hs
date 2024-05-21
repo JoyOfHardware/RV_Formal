@@ -1,7 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE CPP #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell #-}
 
 module Peripherals.Ram(
   Ram,
@@ -12,49 +9,44 @@ module Peripherals.Ram(
 import Clash.Prelude
 import qualified Prelude as P
 import qualified Data.ByteString.Lazy as BL
-import Data.Binary.Get
+import Data.Binary.Get ( getInt32le, runGet, isEmpty )
 import Data.Int (Int32)
 import qualified Clash.Sized.Vector as Vec
 import Bus(Request(..), Resp(..))
 import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
+import Util(fullWordsToQuadWords)
 
--- vector depth has to be known statically at compile time
 #ifndef _RAM_DEPTH
 #define _RAM_DEPTH 1024
 #endif
 
 -- TODO : replace Unsigned 32 with BusVal types later...
-type Ram = Vec _RAM_DEPTH (Unsigned 32)
+type Ram = Vec _RAM_DEPTH (Unsigned 128)
 
 ramDepth :: Int
 ramDepth = _RAM_DEPTH
 
 ramWidth :: Int
-ramWidth = 32
-
--- read :: Request -> Ram -> Resp
--- read request ram = 
---   case request of
---     ReqByte addr -> RespByte $ ram Vec.!! (fromIntegral addr)
---     ReqHalfWord addr -> RespHalfWord $ ram Vec.!! (fromIntegral addr)
---     ReqWord addr -> RespWord $ ram Vec.!! (fromIntegral addr)
+ramWidth = 128
 
 initRamFromFile :: FilePath -> IO (Maybe Ram)
 initRamFromFile filePath = 
     let
-      initRam = Vec.replicate (SNat :: SNat _RAM_DEPTH) 0
+      zeroedRamVec32 = Vec.replicate (SNat :: SNat (_RAM_DEPTH * 4)) 0
     in
       do
-      bs <- readFileIntoByteString filePath
-      let ints = getInts bs
-      pure $ populateVectorFromInt32 ints initRam
+        bs <- readFileIntoByteString filePath
+        let int32s = zeroPadMkLengthMultipleOfFour $ byteStringToInt32s bs
+        let initRamVec32 = populateVectorFromInt32s int32s zeroedRamVec32
+        pure $ case initRamVec32 of
+          Just vec32 -> Just (fullWordsToQuadWords vec32)
+          Nothing -> Nothing
 
 readFileIntoByteString :: FilePath -> IO BL.ByteString
 readFileIntoByteString filePath = BL.readFile filePath
 
--- Define a function to read a ByteString and convert to [Int32]
-getInts :: BL.ByteString -> [Int32]
-getInts bs = runGet listOfInts bs
+byteStringToInt32s :: BL.ByteString -> [Int32]
+byteStringToInt32s bs = runGet listOfInts bs
   where
     listOfInts = do
       empty <- isEmpty
@@ -65,15 +57,20 @@ getInts bs = runGet listOfInts bs
         rest <- listOfInts -- Recursively parse the rest
         pure (i : rest)
 
--- Adjusts the length of a list of integers by either truncating or padding with zeros
-populateVectorFromInt32 :: 
+populateVectorFromInt32s :: 
     KnownNat n =>
     [Int32] -> 
     Vec n (Unsigned 32) -> 
     Maybe (Vec n (Unsigned 32))
-populateVectorFromInt32 ls v = Vec.fromList adjustedLs
+populateVectorFromInt32s ls v = Vec.fromList adjustedLs
   where
     vecLen = length v
     adjustedLs = fromIntegral <$> adjustLength vecLen ls
     adjustLength :: Int -> [Int32] -> [Int32]
     adjustLength n xs = P.take n (xs P.++ P.repeat 0)
+
+zeroPadMkLengthMultipleOfFour :: [Int32] -> [Int32]
+zeroPadMkLengthMultipleOfFour xs = xs P.++ (P.replicate padding 0)
+  where
+    len = P.length xs
+    padding = (4 - (len `mod` 4)) `mod` 4
