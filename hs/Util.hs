@@ -11,34 +11,41 @@ module Util(
 import Clash.Prelude
 import Types(FullWord)
 
-data ValidIndex32 (n :: Nat) where
-  ValidIndex32 :: (0 <= n, n <= 31) => SNat n -> ValidIndex32 n
+data ValidIndex32Bit (n :: Nat) where
+  ValidIndex32Bit :: (0 <= n, n <= 31) => SNat n -> ValidIndex32Bit n
 
-mkValidIndex32 :: forall n. (KnownNat n, 0 <= n, n <= 31) => ValidIndex32 n
-mkValidIndex32 = ValidIndex32 $ SNat @n
+mkValidIndex32 :: forall n. (KnownNat n, 0 <= n, n <= 31) => ValidIndex32Bit n
+mkValidIndex32 = ValidIndex32Bit $ SNat @n
 
 powerIndex32 :: forall n. (KnownNat n, 0 <= n, n <= 31) => SNat (31 - n)
 powerIndex32 = case mkValidIndex32 @n of
-  ValidIndex32 _ -> SNat @(31 - n)
+  ValidIndex32Bit _ -> SNat @(31 - n)
 
-data ValidIndex63 (n :: Nat) where
-  ValidIndex63 :: (0 <= n, n <= 63) => SNat n -> ValidIndex63 n
+data ValidIndex64Bit (n :: Nat) where
+  ValidIndex64Bit :: (0 <= n, n <= 63) => SNat n -> ValidIndex64Bit n
 
-mkValidIndex64 :: forall n. (KnownNat n, 0 <= n, n <= 63) => ValidIndex63 n
-mkValidIndex64 = ValidIndex63 $ SNat @n
+mkValidIndex64 :: forall n. (KnownNat n, 0 <= n, n <= 63) => ValidIndex64Bit n
+mkValidIndex64 = ValidIndex64Bit $ SNat @n
 
 powerIndex64 :: forall n. (KnownNat n, 0 <= n, n <= 63) => SNat (63 - n)
 powerIndex64 = case mkValidIndex64 @n of
-  ValidIndex63 _ -> SNat @(63 - n)
+  ValidIndex64Bit _ -> SNat @(63 - n)
 
 endianSwapWord :: FullWord -> FullWord
-endianSwapWord x = 
-  (byte0 `shiftL` 24) .|.
-  (byte1 `shiftL` 16) .|.
-  (byte2 `shiftL` 8)  .|.
-  byte3
+endianSwapWord x = swappedWord
   where
-    byte0 = (x .&. 0x000000FF)
-    byte1 = (x .&. 0x0000FF00) `shiftR` 8
-    byte2 = (x .&. 0x00FF0000) `shiftR` 16
-    byte3 = (x .&. 0xFF000000) `shiftR` 24
+    wordAsVecBytes = bitCoerce x :: Vec 4 (Unsigned 8)
+    reversedVec = reverse wordAsVecBytes
+    swappedWord = bitCoerce reversedVec :: FullWord
+
+unsigned128ToBytes :: Unsigned 128 -> Vec 16 (Unsigned 8)
+unsigned128ToBytes = bitCoerce
+
+unsigned128ToHalfWords :: Unsigned 128 -> Vec 8 (Unsigned 16)
+unsigned128ToHalfWords = bitCoerce
+
+unsigned128ToWords :: Unsigned 128 -> Vec 4 (Unsigned 32)
+unsigned128ToWords = bitCoerce
+
+unsigned128ToDoubleWords :: Unsigned 128 -> Vec 2 (Unsigned 64)
+unsigned128ToDoubleWords = bitCoerce

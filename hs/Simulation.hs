@@ -2,9 +2,9 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE ConstraintKinds #-}
 
-module Simulation(Args(..), simulation) where
+module Simulation(Simulation(..), Args(..), simulation) where
 
-import Peripherals.Setup(setupPeripherals)
+import Peripherals.Setup(setupPeripherals, InitializedPeripherals(..))
 import Peripherals.Teardown(teardownPeripherals)
 import Text.Printf (printf)
 import Clash.Prelude
@@ -22,6 +22,11 @@ import Debug.Trace
 data Args = Args {
     firmware :: FilePath
     } deriving (Show)
+
+data Simulation 
+  = Success [Machine]
+  | Failure String
+  deriving (Show)
 
 machine :: Machine
 machine = machineInit
@@ -52,9 +57,6 @@ machine' machine@(
   in
     machine { cpu = cpu', mem = mem' }
 
-machineSignal :: HiddenClockResetEnable dom => Signal dom Machine
-machineSignal = register machine (machine' <$> machineSignal)
-
 simulationLoop :: Int -> Machine -> IO [Machine]
 simulationLoop 0 state = return [state]
 simulationLoop n state = do
@@ -62,15 +64,17 @@ simulationLoop n state = do
   rest <- simulationLoop (n - 1) newState
   return (state : rest)
 
-simulation :: Args -> IO [Machine]
+simulation :: Args -> IO Simulation
 simulation args = do
-  setupPeripherals (firmware args)
+  initializedPeripherals <- setupPeripherals (firmware args)
+  case initializedPeripherals of
+    InitializationError e -> return $ Failure e
+    InitializedPeripherals _ -> do
+      -- TODO : remove quick smoketest that UART works later
+      writeCharToTerminal 'a'
+      threadDelay 1000000  -- Delay for 1 second (1,000,000 microseconds)
 
-  -- quick smoketest that UART works - remove later
-  writeCharToTerminal 'a'
-  threadDelay 1000000  -- Delay for 1 second (1,000,000 microseconds)
-
-  let initState = machine
-  sim <- simulationLoop 5 initState
-  teardownPeripherals
-  return sim
+      let initState = machine
+      sim <- simulationLoop 5 initState
+      teardownPeripherals
+      return $ Success sim

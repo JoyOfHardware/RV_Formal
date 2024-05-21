@@ -1,4 +1,4 @@
-module Peripherals.Setup (setupPeripherals, InitializedPeripherals) where
+module Peripherals.Setup (setupPeripherals, InitializedPeripherals(..)) where
 
 import Prelude
 import Peripherals.UartCFFI (initTerminal)
@@ -15,7 +15,7 @@ data InitializedPeripherals
 
 setupPeripherals :: FirmwareFilePath -> IO InitializedPeripherals
 setupPeripherals firmwareFilePath = do
-    -- initTerminal
+    initTerminal
     result <- try (initRamFromFile firmwareFilePath)
     
     return $ case result of
