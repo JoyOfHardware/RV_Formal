@@ -14,26 +14,47 @@ import Data.Int (Int32, Int8)
 import qualified Clash.Sized.Vector as Vec
 import Bus(Request(..), Resp(..))
 import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
-import Util(fullWordsToQuadWords)
+import Util(fullWordsToQuadWords, Log2)
 import Data.Binary (Word8)
+import Bus(Request(..), Resp(..))
+import Data.Data (Proxy(..))
 
-#ifndef _RAM_DEPTH
-#define _RAM_DEPTH 1024
+#ifndef _RAM_ADDR_WIDTH
+#define _RAM_ADDR_WIDTH 10
 #endif
 
--- TODO : replace Unsigned 32 with BusVal types later...
-type Ram = Vec _RAM_DEPTH (Unsigned 128)
+-- Define type-level constants
+type RAMAddrWidth     = _RAM_ADDR_WIDTH
+type BytesPerRAMLine  = 16
+type LineAddrWidth    = Util.Log2 BytesPerRAMLine
+type NumLinesInRAM    = 2 ^ RAMAddrWidth
+type NumBytesInRAM    = NumLinesInRAM * 16
+
+type RAMAddr          = Unsigned RAMAddrWidth
+
+type Ram = Vec NumLinesInRAM (Unsigned (BytesPerRAMLine * 8))
 
 ramDepth :: Int
-ramDepth = _RAM_DEPTH
+ramDepth = fromIntegral $ natVal (Proxy @NumLinesInRAM)
+
+bytesPerLine :: Int
+bytesPerLine = fromIntegral $ natVal (Proxy @BytesPerRAMLine)
 
 ramWidth :: Int
 ramWidth = 128
 
+read :: (Request RAMAddr) -> Ram -> Resp
+read (ReqByte addr) ram =
+  let
+    ramLine = addr `shiftR` bytesPerLine
+  in
+    undefined
+
+
 initRamFromFile :: FilePath -> IO (Maybe Ram)
 initRamFromFile filePath = 
     let
-      zeroedRamVec8 = Vec.replicate (SNat :: SNat (_RAM_DEPTH * 16)) (0 :: Unsigned 8)
+      zeroedRamVec8 = Vec.replicate (SNat :: SNat NumBytesInRAM) (0 :: Unsigned 8)
     in
       do
         bs <- readFileIntoByteString filePath

@@ -8,12 +8,12 @@ data Error
     | UnAligned
     deriving (Generic, Show, Eq, NFDataX)
 
-data Request 
-    = ReqByte Addr
-    | ReqHalfWord Addr
-    | ReqWord Addr
-    | ReqDoubleWord Addr
-    | ReqQuadWord Addr
+data Request a
+    = ReqByte a
+    | ReqHalfWord a
+    | ReqWord a
+    | ReqDoubleWord a
+    | ReqQuadWord a
     deriving (Generic, Show, Eq, NFDataX)
 
 data Resp

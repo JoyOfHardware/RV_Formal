@@ -2,13 +2,16 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Util(
+  Util.Log2,
   powerIndex32,
   powerIndex64,
   endianSwapWord,
   unsigned128ToBytes,
-  unsigned128ToWords,
+  unsigned128ToHalfWords,
+  unsigned128ToFullWords,
   unsigned128ToDoubleWords,
   fullWordsToQuadWords,
   showHex128,
@@ -48,14 +51,19 @@ endianSwapWord x = swappedWord
     reversedVec = reverse wordAsVecBytes
     swappedWord = bitCoerce reversedVec :: FullWord
 
+type family Log2 (n :: Nat) :: Nat where
+  Util.Log2 1 = 0
+  Util.Log2 2 = 1
+  Util.Log2 n = 1 + Util.Log2 (Div n 2)
+
 unsigned128ToBytes :: Unsigned 128 -> Vec 16 (Unsigned 8)
 unsigned128ToBytes = bitCoerce
 
 unsigned128ToHalfWords :: Unsigned 128 -> Vec 8 (Unsigned 16)
 unsigned128ToHalfWords = bitCoerce
 
-unsigned128ToWords :: Unsigned 128 -> Vec 4 (Unsigned 32)
-unsigned128ToWords = bitCoerce
+unsigned128ToFullWords :: Unsigned 128 -> Vec 4 (Unsigned 32)
+unsigned128ToFullWords = bitCoerce
 
 unsigned128ToDoubleWords :: Unsigned 128 -> Vec 2 (Unsigned 64)
 unsigned128ToDoubleWords = bitCoerce
