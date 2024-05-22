@@ -14,7 +14,12 @@ import Data.Int (Int32, Int8)
 import qualified Clash.Sized.Vector as Vec
 import Bus(Request(..), Resp(..))
 import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
-import Util(fullWordsToQuadWords, Log2)
+import Util(fullWordsToQuadWords, Log2,
+            unsigned128ToBytes, 
+            unsigned128ToHalfWords,
+            unsigned128ToFullWords,
+            unsigned128ToDoubleWords
+            )
 import Data.Binary (Word8)
 import Bus(Request(..), Resp(..))
 import Data.Data (Proxy(..))
@@ -29,24 +34,45 @@ type BytesPerRAMLine  = 16
 type LineAddrWidth    = Util.Log2 BytesPerRAMLine
 type NumLinesInRAM    = 2 ^ RAMAddrWidth
 type NumBytesInRAM    = NumLinesInRAM * 16
+type RAMLine          = Unsigned (BytesPerRAMLine * 8)
 
 type RAMAddr          = Unsigned RAMAddrWidth
 
-type Ram = Vec NumLinesInRAM (Unsigned (BytesPerRAMLine * 8))
+type Ram = Vec NumLinesInRAM RAMLine
 
 ramDepth :: Int
 ramDepth = fromIntegral $ natVal (Proxy @NumLinesInRAM)
 
-bytesPerLine :: Int
-bytesPerLine = fromIntegral $ natVal (Proxy @BytesPerRAMLine)
+lineAddrWidth :: Int
+lineAddrWidth = fromIntegral $ natVal (Proxy @LineAddrWidth)
 
 ramWidth :: Int
 ramWidth = 128
 
+o :: Unsigned 32 = complement 0
+
+
+readRamLine :: RAMAddr -> Ram -> RAMLine
+readRamLine addr ram = ramLine
+  where
+    ramLineAddr = addr `shiftR` lineAddrWidth
+    ramLine = ram !! ramLineAddr
+
 read :: (Request RAMAddr) -> Ram -> Resp
 read (ReqByte addr) ram =
   let
-    ramLine = addr `shiftR` bytesPerLine
+    ramLine = readRamLine addr ram
+    byteMask :: Unsigned LineAddrWidth = complement 0
+    byteIndexInLine = addr .&. (zeroExtend byteMask)
+    byteVal = (unsigned128ToBytes ramLine) !! byteIndexInLine
+  in
+    RespByte byteVal
+read (ReqHalfWord addr) ram =
+  let
+    ramLine = readRamLine addr ram
+    byteMask :: Unsigned LineAddrWidth = complement 0
+    byteIndexInLine = addr .&. (zeroExtend byteMask)
+    byteVal = (unsigned128ToBytes ramLine) !! byteIndexInLine
   in
     undefined
 
