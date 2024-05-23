@@ -4,6 +4,7 @@ module Peripherals.Ram(
   Ram,
   ramDepth,
   initRamFromFile,
+  Peripherals.Ram.read
 ) where
 
 import Clash.Prelude
@@ -17,7 +18,7 @@ import Machine(Endian(..))
 import Bus(Request(..), Resp(..))
 import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
 import Util(fullWordsToQuadWords, Log2,
-            unsigned128ToBytes, 
+            unsigned128ToBytes,
             unsigned128ToHalfWords,
             unsigned128ToFullWords,
             unsigned128ToDoubleWords,
@@ -27,12 +28,8 @@ import Data.Binary (Word8)
 import Bus(Request(..), Resp(..))
 import Data.Data (Proxy(..))
 
-#ifndef _RAM_ADDR_WIDTH
-#define _RAM_ADDR_WIDTH 10
-#endif
 
--- Define type-level constants
-type RAMAddrWidth     = _RAM_ADDR_WIDTH
+type RAMAddrWidth     = 10
 type BytesPerRAMLine  = 16
 type LineAddrWidth    = Util.Log2 BytesPerRAMLine
 type NumLinesInRAM    = 2 ^ RAMAddrWidth
@@ -49,12 +46,6 @@ ramDepth = fromIntegral $ natVal (Proxy @NumLinesInRAM)
 lineAddrWidth :: Int
 lineAddrWidth = fromIntegral $ natVal (Proxy @LineAddrWidth)
 
-ramWidth :: Int
-ramWidth = 128
-
-o :: Unsigned 32 = complement 0
-
-
 readRamLine :: RAMAddr -> Ram -> RAMLine
 readRamLine addr ram = ramLine
   where
@@ -62,70 +53,54 @@ readRamLine addr ram = ramLine
     ramLine = ram !! ramLineAddr
 
 read :: Request RAMAddr -> Endian -> Ram -> Resp
-read req endian ram = 
+read req endian ram =
   case endian of
     Big -> respVal
     Little -> case respVal of
-      RespByte byte -> RespByte $ endianSwap byte
-      RespHalfWord halfWord -> RespHalfWord $ endianSwap halfWord
-      RespFullWord fullWord -> RespFullWord $ endianSwap fullWord
+      RespByte byte             -> RespByte $ endianSwap byte
+      RespHalfWord halfWord     -> RespHalfWord $ endianSwap halfWord
+      RespFullWord fullWord     -> RespFullWord $ endianSwap fullWord
       RespDoubleWord doubleWord -> RespDoubleWord $ endianSwap doubleWord
+      RespQuadWord quadWord     -> RespQuadWord $ endianSwap quadWord
+      RespError _               -> respVal
   where
     respVal = case req of
-      ReqByte addr -> 
-          let
-              shftAmt = 0
-              ramLine = readRamLine addr ram
-              byteMask :: Unsigned LineAddrWidth = complement 0
-              byteIndexInLine :: Unsigned LineAddrWidth = 
-                  resize ((addr `shiftR` shftAmt) .&. resize byteMask)
-              byteVal = (unsigned128ToBytes ramLine) !! byteIndexInLine
-          in
-              RespByte byteVal
-      ReqHalfWord addr ->
-          let
-              shftAmt = 1
-              ramLine = readRamLine addr ram
-              halfWordMask :: Unsigned (LineAddrWidth - 1) = complement 0
-              halfWordIndexInLine :: Unsigned (LineAddrWidth - 1) = 
-                  resize ((addr `shiftR` shftAmt) .&. resize halfWordMask)
-              halfWordVal = (unsigned128ToHalfWords ramLine) !! halfWordIndexInLine
-          in
-              RespHalfWord halfWordVal
-      ReqFullWord addr ->
-          let
-              shftAmt = 2
-              ramLine = readRamLine addr ram
-              fullWordMask :: Unsigned (LineAddrWidth - 2) = complement 0
-              fullWordIndexInLine :: Unsigned (LineAddrWidth - 2) = 
-                  resize ((addr `shiftR` shftAmt) .&. resize fullWordMask)
-              fullWordVal = (unsigned128ToFullWords ramLine) !! fullWordIndexInLine
-          in
-              RespFullWord fullWordVal
-      ReqDoubleWord addr ->
-          let
-              shftAmt = 3
-              ramLine = readRamLine addr ram
-              doubleWordMask :: Unsigned (LineAddrWidth - 3) = complement 0
-              doubleWordIndexInLine :: Unsigned (LineAddrWidth - 3) = 
-                  resize ((addr `shiftR` shftAmt) .&. resize doubleWordMask)
-              doubleWordVal = (unsigned128ToDoubleWords ramLine) !! doubleWordIndexInLine
-          in
-              RespDoubleWord doubleWordVal
-
-      -- ReqQuadWord addr ->
-      --     let
-      --         shftAmt = 4
-      --         ramLine = readRamLine addr ram
-      --         quadWordMask :: Unsigned (LineAddrWidth - 4) = complement 0
-      --         quadWordIndexInLine :: Unsigned (LineAddrWidth - 4) = 
-      --             resize ((addr `shiftR` shftAmt) .&. resize quadWordMask)
-      --         quadWordVal = (unsigned128ToQuadWords ramLine) !! quadWordIndexInLine
-      --     in
-      --         RespQuadWord quadWordVal
+      ReqByte addr -> RespByte byteVal
+        where
+          shftAmt = 0
+          ramLine = readRamLine addr ram
+          byteMask :: Unsigned LineAddrWidth = complement 0
+          byteIndexInLine :: Unsigned LineAddrWidth =
+              resize ((addr `shiftR` shftAmt) .&. resize byteMask)
+          byteVal = unsigned128ToBytes ramLine !! byteIndexInLine
+      ReqHalfWord addr -> RespHalfWord halfWordVal
+        where
+          shftAmt = 1
+          ramLine = readRamLine addr ram
+          halfWordMask :: Unsigned (LineAddrWidth - 1) = complement 0
+          halfWordIndexInLine :: Unsigned (LineAddrWidth - 1) =
+              resize ((addr `shiftR` shftAmt) .&. resize halfWordMask)
+          halfWordVal = unsigned128ToHalfWords ramLine !! halfWordIndexInLine
+      ReqFullWord addr -> RespFullWord fullWordVal
+        where
+          shftAmt = 2
+          ramLine = readRamLine addr ram
+          fullWordMask :: Unsigned (LineAddrWidth - 2) = complement 0
+          fullWordIndexInLine :: Unsigned (LineAddrWidth - 2) =
+              resize ((addr `shiftR` shftAmt) .&. resize fullWordMask)
+          fullWordVal = unsigned128ToFullWords ramLine !! fullWordIndexInLine
+      ReqDoubleWord addr -> RespDoubleWord doubleWordVal
+        where
+          shftAmt = 3
+          ramLine = readRamLine addr ram
+          doubleWordMask :: Unsigned (LineAddrWidth - 3) = complement 0
+          doubleWordIndexInLine :: Unsigned (LineAddrWidth - 3) =
+              resize ((addr `shiftR` shftAmt) .&. resize doubleWordMask)
+          doubleWordVal = unsigned128ToDoubleWords ramLine !! doubleWordIndexInLine
+      ReqQuadWord addr -> RespQuadWord $ readRamLine addr ram
 
 initRamFromFile :: FilePath -> IO (Maybe Ram)
-initRamFromFile filePath = 
+initRamFromFile filePath =
     let
       zeroedRamVec8 = Vec.replicate (SNat :: SNat NumBytesInRAM) (0 :: Unsigned 8)
     in
@@ -143,10 +118,10 @@ readFileIntoByteString filePath = BL.readFile filePath
 byteStringToInt8List :: BL.ByteString -> [Int8]
 byteStringToInt8List bs = P.map (fromIntegral :: Word8 -> Int8) (BL.unpack bs)
 
-populateVectorFromInt8s :: 
+populateVectorFromInt8s ::
     KnownNat n =>
-    [Int8] -> 
-    Vec n (Unsigned 8) -> 
+    [Int8] ->
+    Vec n (Unsigned 8) ->
     Maybe (Vec n (Unsigned 8))
 populateVectorFromInt8s ls v = Vec.fromList adjustedLs
   where
