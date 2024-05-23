@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveFunctor #-}
+
 module Bus(Request(..), Resp(..)) where
 
 import Clash.Prelude
@@ -11,7 +13,7 @@ data Error
 data Request a
     = ReqByte a
     | ReqHalfWord a
-    | ReqWord a
+    | ReqFullWord a
     | ReqDoubleWord a
     | ReqQuadWord a
     deriving (Generic, Show, Eq, NFDataX)
@@ -19,7 +21,7 @@ data Request a
 data Resp
     = RespByte Byte
     | RespHalfWord HalfWord
-    | RespWord FullWord
+    | RespFullWord FullWord
     | RespDoubleWord DoubleWord
     | RespQuadWord QuadWord
     | RespError Error

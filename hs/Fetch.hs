@@ -7,7 +7,7 @@ import Clash.Prelude
 import Types(Mem, Insn, Addr)
 import Machine(Endian(..), getEndian)
 import RegFiles(MSR)
-import Util(endianSwapWord)
+import Util(endianSwap)
 
 fetchInstruction :: KnownNat n => Mem n -> MSR -> Addr -> Insn
 fetchInstruction mem msr addr =
@@ -18,4 +18,4 @@ fetchInstruction mem msr addr =
   in
     case endian of
       Big -> insn
-      Little -> endianSwapWord insn
+      Little -> endianSwap insn

@@ -17,6 +17,12 @@ pushd resources/loopback_asm; make; popd
 cabal run main --ghc-options="-D_RAM_ADDR_WIDTH=10" -- --firmware=resources/loopback_asm/firmware.bin
 ```
 
+# Debugging 
+
+```bash
+cabal repl ppcFormal
+```
+
 # Notes
 All the context that we pick up as we execute an instruction in
 essence forms the context of our micro-op machinery.

@@ -8,7 +8,7 @@ module Util(
   Util.Log2,
   powerIndex32,
   powerIndex64,
-  endianSwapWord,
+  endianSwap,
   unsigned128ToBytes,
   unsigned128ToHalfWords,
   unsigned128ToFullWords,
@@ -50,6 +50,13 @@ endianSwapWord x = swappedWord
     wordAsVecBytes = bitCoerce x :: Vec 4 (Unsigned 8)
     reversedVec = reverse wordAsVecBytes
     swappedWord = bitCoerce reversedVec :: FullWord
+
+endianSwap :: forall n. KnownNat n => Unsigned (n * 8) -> Unsigned (n * 8)
+endianSwap x = swappedWord
+  where
+    wordAsVecBytes = bitCoerce x :: Vec n (Unsigned 8)
+    reversedVec = reverse wordAsVecBytes
+    swappedWord = bitCoerce reversedVec
 
 type family Log2 (n :: Nat) :: Nat where
   Util.Log2 1 = 0
