@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 
-module Bus(Request(..), Resp(..)) where
+module Bus(Request(..), Resp(..), Error(..)) where
 
 import Clash.Prelude
 import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)

@@ -15,7 +15,7 @@ import Data.Int (Int32, Int8)
 import qualified Clash.Sized.Vector as Vec
 
 import Machine(Endian(..))
-import Bus(Request(..), Resp(..))
+import Bus(Request(..), Resp(..), Error (..))
 import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
 import Util(fullWordsToQuadWords, Log2,
             unsigned128ToBytes,
@@ -54,50 +54,45 @@ readRamLine addr ram = ramLine
 
 read :: Request RAMAddr -> Endian -> Ram -> Resp
 read req endian ram =
-  case endian of
-    Big -> respVal
-    Little -> case respVal of
+  case (endian, aligned) of
+    (Big, True) -> respVal
+    (Little, True) -> case respVal of
       RespByte byte             -> RespByte $ endianSwap byte
       RespHalfWord halfWord     -> RespHalfWord $ endianSwap halfWord
       RespFullWord fullWord     -> RespFullWord $ endianSwap fullWord
       RespDoubleWord doubleWord -> RespDoubleWord $ endianSwap doubleWord
       RespQuadWord quadWord     -> RespQuadWord $ endianSwap quadWord
       RespError _               -> respVal
+    _ -> RespError UnAligned
   where
-    respVal = case req of
-      ReqByte addr -> RespByte byteVal
+    (respVal, aligned) = case req of
+      ReqByte addr -> (RespByte byteVal, aligned)
         where
-          shftAmt = 0
           ramLine = readRamLine addr ram
-          byteMask :: Unsigned LineAddrWidth = complement 0
-          byteIndexInLine :: Unsigned LineAddrWidth =
-              resize ((addr `shiftR` shftAmt) .&. resize byteMask)
+          aligned = True
+          byteIndexInLine = slice d3 d0 addr
           byteVal = unsigned128ToBytes ramLine !! byteIndexInLine
-      ReqHalfWord addr -> RespHalfWord halfWordVal
+      ReqHalfWord addr -> (RespHalfWord halfWordVal, aligned)
         where
-          shftAmt = 1
           ramLine = readRamLine addr ram
-          halfWordMask :: Unsigned (LineAddrWidth - 1) = complement 0
-          halfWordIndexInLine :: Unsigned (LineAddrWidth - 1) =
-              resize ((addr `shiftR` shftAmt) .&. resize halfWordMask)
+          aligned = slice d0 d0 addr == 0
+          halfWordIndexInLine = slice d3 d1 addr
           halfWordVal = unsigned128ToHalfWords ramLine !! halfWordIndexInLine
-      ReqFullWord addr -> RespFullWord fullWordVal
+      ReqFullWord addr -> (RespFullWord fullWordVal, aligned)
         where
-          shftAmt = 2
           ramLine = readRamLine addr ram
-          fullWordMask :: Unsigned (LineAddrWidth - 2) = complement 0
-          fullWordIndexInLine :: Unsigned (LineAddrWidth - 2) =
-              resize ((addr `shiftR` shftAmt) .&. resize fullWordMask)
+          aligned = slice d1 d0 addr == 0
+          fullWordIndexInLine = slice d3 d2 addr
           fullWordVal = unsigned128ToFullWords ramLine !! fullWordIndexInLine
-      ReqDoubleWord addr -> RespDoubleWord doubleWordVal
+      ReqDoubleWord addr -> (RespDoubleWord doubleWordVal, aligned)
         where
-          shftAmt = 3
           ramLine = readRamLine addr ram
-          doubleWordMask :: Unsigned (LineAddrWidth - 3) = complement 0
-          doubleWordIndexInLine :: Unsigned (LineAddrWidth - 3) =
-              resize ((addr `shiftR` shftAmt) .&. resize doubleWordMask)
+          aligned = slice d2 d0 addr == 0
+          doubleWordIndexInLine = slice d2 d2 addr
           doubleWordVal = unsigned128ToDoubleWords ramLine !! doubleWordIndexInLine
-      ReqQuadWord addr -> RespQuadWord $ readRamLine addr ram
+      ReqQuadWord addr -> (RespQuadWord $ readRamLine addr ram, aligned)
+        where
+          aligned = slice d3 d0 addr == 0
 
 initRamFromFile :: FilePath -> IO (Maybe Ram)
 initRamFromFile filePath =
