@@ -1,28 +1,31 @@
-{-# LANGUAGE DeriveFunctor #-}
-
-module Bus(Request(..), Resp(..), Error(..)) where
+module Bus(Bus.read, write) where
 
 import Clash.Prelude
-import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
 
-data Error
-    = UnMapped
-    | UnAligned
-    deriving (Generic, Show, Eq, NFDataX)
+import IOTransactionTypes(Request(..), Resp(..), Error(..))
+import Peripherals.Ram(Ram, read, numBytesInRam)
+import VirtualToReal(virtualToReal)
+import Machine(Endian(..))
+import Types(Addr)
 
-data Request a
-    = ReqByte a
-    | ReqHalfWord a
-    | ReqFullWord a
-    | ReqDoubleWord a
-    | ReqQuadWord a
-    deriving (Generic, Show, Eq, NFDataX)
+data Peripherals = Peripherals 
+  {
+      ram :: Ram
+  }
 
-data Resp
-    = RespByte Byte
-    | RespHalfWord HalfWord
-    | RespFullWord FullWord
-    | RespDoubleWord DoubleWord
-    | RespQuadWord QuadWord
-    | RespError Error
-    deriving (Generic, Show, Eq, NFDataX)
+read :: Request Addr -> Endian -> Peripherals -> Resp
+read req endian peripherals
+  | (addr > 0) && (addr < numBytesInRam) =  Peripherals.Ram.read 
+                                                (resize <$> req)
+                                                endian
+                                                (ram peripherals)
+  | otherwise                            =  RespError UnMapped
+  where
+    addr = virtualToReal $ case req of
+      ReqHalfWord   a  -> a
+      ReqFullWord   a  -> a
+      ReqDoubleWord a  -> a
+      ReqQuadWord   a  -> a
+    val = 3
+
+write = 4

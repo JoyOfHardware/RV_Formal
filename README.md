@@ -36,6 +36,7 @@ bash build_gcc.sh
 ```
 
 # TODO
+ - [ ] address all warnings
  - [ ] fetch should invoke mem read function
  - [ ] all caps for form fields
  - [ ] make sliceByField function
