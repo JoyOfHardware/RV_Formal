@@ -12,7 +12,7 @@ import Data.Binary.Get ( getInt32le, runGet, isEmpty )
 import Data.Int (Int32, Int8)
 import qualified Clash.Sized.Vector as Vec
 
-import Machine(Endian(..))
+import Types(Endian(..))
 import IOTransactionTypes(Request(..), Resp(..), Error (..))
 import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
 import Util(fullWordsToQuadWords,

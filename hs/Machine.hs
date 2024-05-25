@@ -9,11 +9,10 @@ module Machine(
   machineInit) where
 
 import Clash.Prelude
-import Types(Pc, Mem)
+import Types(Pc, Mem, Endian)
 import RegFiles(GPR, MSR, gprInit, msrInit)
-
-data Endian = Big | Little
-  deriving (Generic, Show, Eq, NFDataX)
+import Peripherals.Ram(Ram)
+import Types(Endian(..))
 
 data POWER_CPU = POWER_CPU
   { pc :: Pc,
@@ -24,6 +23,7 @@ data POWER_CPU = POWER_CPU
 
 data Machine = Machine
   { cpu :: POWER_CPU,
+    ram :: Ram,
     mem :: Mem 14
   } 
   deriving (Generic, Show, Eq, NFDataX)
@@ -44,10 +44,11 @@ powerCPUInit =
     msrInit
     gprInit
 
-machineInit :: Machine
-machineInit =
+machineInit :: Ram -> Machine
+machineInit ram =
   Machine
     powerCPUInit
+    ram
     memInit
 
 memInit :: Vec 14 (Unsigned 32)
