@@ -11,6 +11,7 @@ import Clash.Prelude
 import qualified Prelude as P
 import Machine(
   Machine(..),
+  Peripherals(..),
   POWER_CPU(..),
   machineInit)
 import Fetch(fetchInstruction)
@@ -72,12 +73,8 @@ simulation args = do
   case initializedPeripherals of
     InitializationError e -> return $ Failure e
     InitializedPeripherals ram -> do
-      -- mapM_ putStrLn $ P.map showHex128 $ P.take 10 $ toList ram
-      -- TODO : remove quick smoketest that UART works later
-      -- writeCharToTerminal 'a'
-      -- threadDelay 1000000  -- Delay for 1 second (1,000,000 microseconds)
 
-      let initState = machineInit ram
+      let initState = machineInit $ Machine.Peripherals ram
       sim <- simulationLoop 5 initState
       teardownPeripherals
       return $ Success sim

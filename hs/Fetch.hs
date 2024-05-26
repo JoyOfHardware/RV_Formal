@@ -8,6 +8,7 @@ import Types(Mem, Insn, Addr)
 import Machine(Endian(..), getEndian)
 import RegFiles(MSR)
 import Util(endianSwap)
+import IOTransactionTypes(Request(..), Resp(..))
 
 fetchInstruction :: KnownNat n => Mem n -> MSR -> Addr -> Insn
 fetchInstruction mem msr addr =
