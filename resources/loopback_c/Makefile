@@ -1,6 +1,7 @@
-CC=powerpc64le-linux-gnu-gcc
-LD=powerpc64le-linux-gnu-ld
-OBJCOPY=powerpc64le-linux-gnu-objcopy
+PREFIX=powerpc64le-unknown-linux-gnu-
+CC=$(PREFIX)gcc
+LD=$(PREFIX)ld
+OBJCOPY=$(PREFIX)objcopy
 
 OBJS = main.o
 OBJS += head.o

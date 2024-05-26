@@ -12,7 +12,7 @@ import Data.Binary.Get ( getInt32le, runGet, isEmpty )
 import Data.Int (Int32, Int8)
 import qualified Clash.Sized.Vector as Vec
 
-import Types(Endian(..))
+import MachineMode(Endian(..))
 import IOTransactionTypes(Request(..), Resp(..), Error (..))
 import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
 import Util(fullWordsToQuadWords,
@@ -56,23 +56,23 @@ read req endian ram =
   case (endian, aligned) of
     (Big, True)     -> respVal
     (Little, True)  -> case respVal of
-      RespByte byte             -> RespByte $ endianSwap byte
-      RespHalfWord halfWord     -> RespHalfWord $ endianSwap halfWord
-      RespFullWord fullWord     -> RespFullWord $ endianSwap fullWord
+      RespByte byte             -> RespByte       $ endianSwap byte
+      RespHalfWord halfWord     -> RespHalfWord   $ endianSwap halfWord
+      RespFullWord fullWord     -> RespFullWord   $ endianSwap fullWord
       RespDoubleWord doubleWord -> RespDoubleWord $ endianSwap doubleWord
-      RespQuadWord quadWord     -> RespQuadWord $ endianSwap quadWord
+      RespQuadWord quadWord     -> RespQuadWord   $ endianSwap quadWord
       RespError _               -> respVal
     _               -> RespError UnAligned
   where
-    (respVal, aligned) = case req of
-      ReqByte addr -> (RespByte byteVal, aligned)
+    (respVal, aligned, endian) = case req of
+      ReqByte addr endian -> (RespByte byteVal, aligned, endian)
         where
           ramLine         = readRamLine addr ram
           aligned         = True
           byteIndexInLine = slice d3 d0 addr
           byteVal         = unsigned128ToBytes ramLine !! byteIndexInLine
 
-      ReqHalfWord addr -> (RespHalfWord halfWordVal, aligned)
+      ReqHalfWord addr endian -> (RespHalfWord halfWordVal, aligned, endian)
         where
           ramLine             = readRamLine addr ram
           aligned             = slice d0 d0 addr == 0
@@ -80,7 +80,7 @@ read req endian ram =
           halfWordVal         = 
             unsigned128ToHalfWords ramLine !! halfWordIndexInLine
 
-      ReqFullWord addr -> (RespFullWord fullWordVal, aligned)
+      ReqFullWord addr endian -> (RespFullWord fullWordVal, aligned, endian)
         where
           ramLine             = readRamLine addr ram
           aligned             = slice d1 d0 addr == 0
@@ -88,7 +88,7 @@ read req endian ram =
           fullWordVal         = 
             unsigned128ToFullWords ramLine !! fullWordIndexInLine
 
-      ReqDoubleWord addr -> (RespDoubleWord doubleWordVal, aligned)
+      ReqDoubleWord addr endian -> (RespDoubleWord doubleWordVal, aligned, endian)
         where
           ramLine               = readRamLine addr ram
           aligned               = slice d2 d0 addr == 0
@@ -96,7 +96,7 @@ read req endian ram =
           doubleWordVal         = 
             unsigned128ToDoubleWords ramLine !! doubleWordIndexInLine
 
-      ReqQuadWord addr -> (RespQuadWord $ readRamLine addr ram, aligned)
+      ReqQuadWord addr endian -> (RespQuadWord $ readRamLine addr ram, aligned, endian)
         where
           aligned = slice d3 d0 addr == 0
 

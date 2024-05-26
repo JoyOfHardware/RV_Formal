@@ -4,17 +4,14 @@
 module Machine(
   Machine(..),
   POWER_CPU(..),
-  Endian(..),
   Peripherals(..),
-  getEndian,
   machineInit) where
 
 import Clash.Prelude
 import Peripherals.Ram(Ram)
-import Types(Pc, Mem, Endian)
+import Types(Pc, Mem)
 import RegFiles(GPR, MSR, gprInit, msrInit)
 import Peripherals.Ram(Ram)
-import Types(Endian(..))
 
 data Peripherals = Peripherals 
   {
@@ -35,15 +32,6 @@ data Machine = Machine
     mem :: Mem 14
   } 
   deriving (Generic, Show, Eq, NFDataX)
-
-
--- | Defined on page 946 of POWER 3.0 ISA
-getEndian :: MSR -> Endian
-getEndian msrVal = 
-  let
-    endianBit = pack msrVal ! 0
-  in
-    if endianBit == 1 then Little else Big
 
 powerCPUInit :: POWER_CPU
 powerCPUInit =

@@ -5,7 +5,7 @@ module Fetch(fetchInstruction) where
 
 import Clash.Prelude
 import Types(Mem, Insn, Addr)
-import Machine(Endian(..), getEndian)
+import MachineMode(Endian(..), getEndian)
 import RegFiles(MSR)
 import Util(endianSwap)
 import IOTransactionTypes(Request(..), Resp(..))

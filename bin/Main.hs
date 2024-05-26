@@ -11,6 +11,7 @@ import Data.List (isPrefixOf)
 import Text.Show.Pretty (ppShow)
 
 import Simulation (Simulation(..), Args(..), simulation)
+import Machine(Machine(..))
 
 main :: IO ()
 main = do
@@ -22,7 +23,7 @@ main = do
         Failure errMsg -> putStrLn $ "Error: " ++ errMsg
         Success states -> do
             -- mapM_ (putStrLn . ppShow) states  -- Uncomment to print each state, if needed.
-            putStrLn $ "Last state: " ++ show (last states)
+            putStrLn $ "Last state: " ++ show (cpu $ last states)
             putStrLn $ "Executed for " ++ show (length states) ++ " cycles"
             putStrLn "Simulation complete"
 

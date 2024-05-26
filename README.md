@@ -36,6 +36,8 @@ bash build_gcc.sh
 ```
 
 # TODO
+ - [ ] remove Mem from Machine
+ - [ ] split into [Regfiles, IO, and CPU]
  - [ ] address all warnings
  - [ ] fetch should invoke mem read function
  - [ ] all caps for form fields

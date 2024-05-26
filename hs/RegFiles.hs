@@ -3,7 +3,7 @@
 
 module RegFiles(
     GPR,
-    MSR, 
+    MSR,
     gprInit,
     msrInit
     ) where

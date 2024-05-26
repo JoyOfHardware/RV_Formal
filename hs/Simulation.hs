@@ -15,10 +15,13 @@ import Machine(
   POWER_CPU(..),
   machineInit)
 import Fetch(fetchInstruction)
+import FetchReq(fetchInstructionReq)
+import FetchResp(fetchInstructionResp)
 import Peripherals.UartCFFI(writeCharToTerminal)
 import Decode.BitpatsToOpcodes(bitpatToOpcode)
 import Control.Concurrent (threadDelay)
 import Util(showHex128)
+import Bus(read)
 
 import Debug.Trace
 
@@ -43,6 +46,7 @@ machine' machine@(
       POWER_CPU{ pc = pc ,
                  msr = msr ,
                  gpr = gpr }),
+    peripherals = peripherals,
     mem = mem }) =
   let
     -- get current instruction
@@ -51,6 +55,8 @@ machine' machine@(
     --     (printf "0x%X" (toInteger v) :: String) 
     --     v
     --   where v = fetchInstruction mem msr pc
+    fetchReq = fetchInstructionReq msr pc
+    executedFetchReq = Bus.read fetchReq peripherals
     instruction = traceShow (bitpatToOpcode v) v
       where v = fetchInstruction mem msr pc
     addr = 0 :: Integer

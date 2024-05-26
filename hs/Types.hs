@@ -7,16 +7,12 @@ module Types(
     Mem,
     Addr,
     Byte,
-    Endian(..),
     HalfWord,
     FullWord,
     DoubleWord,
     QuadWord) where
 
 import Clash.Prelude
-
-data Endian = Big | Little
-  deriving (Generic, Show, Eq, NFDataX)
 
 type Byte       = Unsigned 8
 type HalfWord   = Unsigned 16
