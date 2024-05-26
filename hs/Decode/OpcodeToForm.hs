@@ -7,6 +7,7 @@ import Decode.Opcodes(Opcode(..))
 import Decode.Forms(Form(..))
 import Util(powerIndex32, powerIndex64)
 
+opcodeToForm :: Opcode              -> Form
 opcodeToForm FmaddDot                = A4
 opcodeToForm FmaddsDot               = A4
 opcodeToForm FmsubDot                = A4

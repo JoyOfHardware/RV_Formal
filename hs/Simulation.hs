@@ -19,11 +19,21 @@ import FetchReq(fetchInstructionReq)
 import FetchResp(fetchInstructionResp)
 import Peripherals.UartCFFI(writeCharToTerminal)
 import Decode.BitpatsToOpcodes(bitpatToOpcode)
+import Decode.OpcodeToForm(opcodeToForm)
+import Decode.Opcodes(Opcode(..))
+import Decode.Forms(Form(..))
+import Data.Maybe(fromMaybe)
 import Control.Concurrent (threadDelay)
 import Util(showHex128)
 import Bus(read)
 
 import Debug.Trace
+
+import System.IO.Unsafe (unsafePerformIO)
+
+forceTraceShowUnsafe :: Show a => a -> b -> b
+forceTraceShowUnsafe x y = unsafePerformIO $ do
+    traceShow x (return y)
 
 data Args = Args {
     firmware :: FilePath
@@ -45,26 +55,29 @@ machine' machine@(
     cpu = powerCPU@(
       POWER_CPU{ pc = pc ,
                  msr = msr ,
-                 gpr = gpr }),
-    peripherals = peripherals,
-    mem = mem }) =
+                 gpr = gpr 
+               }),
+    peripherals = peripherals
+          }) =
   let
-    -- get current instruction
-    -- instruction = 
-    --   traceShow 
-    --     (printf "0x%X" (toInteger v) :: String) 
-    --     v
-    --   where v = fetchInstruction mem msr pc
-    fetchReq = fetchInstructionReq msr pc
-    executedFetchReq = Bus.read fetchReq peripherals
-    instruction = traceShow (bitpatToOpcode v) v
-      where v = fetchInstruction mem msr pc
-    addr = 0 :: Integer
-    mem' = replace addr (instruction + 1) mem
-    pc' = pc + 4
-    cpu' = powerCPU { pc = pc' }
+    stage1 = fetchInstructionReq
+    stage2 = fetchInstructionResp
+
+    fetchReq          = stage1 msr pc
+    executedFetchReq  = Bus.read fetchReq peripherals
+    insn              = stage2 executedFetchReq
+
+    opcode :: Opcode
+    opcode = fromMaybe undefined $ bitpatToOpcode insn
+
+    form :: Form
+    form =  opcodeToForm opcode
+
+    pc'   = pc + 4
+    cpu'  = powerCPU { pc = pc' }
+    peripherals' = peripherals
   in
-    machine { cpu = cpu', mem = mem' }
+    machine { cpu = cpu', peripherals = peripherals' }
 
 simulationLoop :: Int -> Machine -> IO [Machine]
 simulationLoop 0 state = return [state]
