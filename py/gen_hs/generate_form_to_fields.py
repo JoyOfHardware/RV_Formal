@@ -11,16 +11,15 @@ functionVariants = []
 for form, fields in forms_v_field_dict.items():
     list_of_fields = ['Unpopulated_'+field for field in fields]
     list_of_fields = f"[{', '.join(list_of_fields)}]"
-    functionVariants += [f"formToField {form} = {list_of_fields}"]
+    functionVariants += [f"formToFields {form} = {list_of_fields}"]
 
 generated_hs = \
-f'''module Decode.FormToField(formToField) where
+f'''module Decode.FormToFields(formToFields) where
 
 import Decode.Fields(UnpopulatedField(..))
 import Decode.Forms(Form(..))
-import Clash.Prelude
 
-formToField :: Form -> [UnpopulatedField]
+formToFields :: Form -> [UnpopulatedField]
 {'\n'.join(functionVariants)}
 '''
 
