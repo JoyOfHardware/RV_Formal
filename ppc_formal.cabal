@@ -93,6 +93,7 @@ library
     Decode.Forms,
     Decode.Fields,
     Decode.ExtractField,
+    Decode.FormToField,
     Decode.OpcodeToForm,
     Peripherals.Ram,
     Peripherals.RamConfig,
