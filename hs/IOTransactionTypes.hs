@@ -1,10 +1,10 @@
 {-# LANGUAGE DeriveFunctor #-}
 
-module IOTransactionTypes(Request(..), Resp(..), Error(..)) where
+module IOTransactionTypes(Request(..), Response(..), Error(..)) where
 
 import Clash.Prelude
 
-import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord)
+import Types(Addr, Byte, HalfWord, FullWord, DoubleWord, QuadWord, DataSize)
 import MachineMode(Endian(..))
 
 data Error
@@ -12,19 +12,19 @@ data Error
     | UnAligned
     deriving (Generic, Show, Eq, NFDataX)
 
-data Request addr
-    = ReqByte        addr  Endian
-    | ReqHalfWord    addr  Endian
-    | ReqFullWord    addr  Endian
-    | ReqDoubleWord  addr  Endian
-    | ReqQuadWord    addr  Endian
-    deriving (Generic, Show, Eq, NFDataX, Functor)
+data Request = Request DataSize Addr Endian
+    deriving (Generic, Show, Eq, NFDataX)
 
-data Resp
-    = RespByte Byte
-    | RespHalfWord HalfWord
-    | RespFullWord FullWord
-    | RespDoubleWord DoubleWord
-    | RespQuadWord QuadWord
+data ReadResponse 
+    = ResponseByte        Byte
+    | ResponseHalfWord    HalfWord
+    | ResponseFullWord    FullWord
+    | ResponseDoubleWord  DoubleWord
+    | ResponseQuadWord    QuadWord
     | RespError Error
+    deriving (Generic, Show, Eq, NFDataX)
+
+data WriteResponse
+    = WriteSuccess
+    | WriteError Error
     deriving (Generic, Show, Eq, NFDataX)

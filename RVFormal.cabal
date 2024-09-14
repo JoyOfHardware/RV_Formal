@@ -1,9 +1,9 @@
 cabal-version:       2.4
-name:                ppcFormal
+name:                RVFormal
 version:             0.1
 license:             BSD-2-Clause
-author:              John Smith <john@example.com>
-maintainer:          John Smith <john@example.com>
+author:              Yehowshua Immanuel <yehowshua@joyofhardware.com>
+maintainer:          Yehowshua Immanuel <yehowshua@joyofhardware.com>
 
 common common-options
   default-extensions:
@@ -106,7 +106,6 @@ library
     FetchResp,
     Bus,
     Types,
-    MachineMode,
     Machine,
     RegFiles,
     Fetch,
@@ -115,21 +114,21 @@ library
   include-dirs: c
   default-language: Haskell2010
 
--- Builds the executable 'clash', with ppcFormal project in scope
+-- Builds the executable 'clash', with RVFormal project in scope
 executable clash
   main-is: bin/Clash.hs
   default-language: Haskell2010
-  Build-Depends: base, clash-ghc, ppcFormal
+  Build-Depends: base, clash-ghc, RVFormal
   if !os(Windows)
     ghc-options: -dynamic
 
--- Builds the executable 'clashi', with ppcFormal project in scope
+-- Builds the executable 'clashi', with RVFormal project in scope
 executable clashi
   main-is: bin/Clashi.hs
   default-language: Haskell2010
   if !os(Windows)
     ghc-options: -dynamic
-  build-depends: base, clash-ghc, ppcFormal
+  build-depends: base, clash-ghc, RVFormal
 
 executable main
   import: common-options
@@ -139,7 +138,7 @@ executable main
   build-depends:
     base,
     clash-ghc,
-    ppcFormal
+    RVFormal
   c-sources: c/uart_sim_device.c
   include-dirs: c
   if !os(Windows)
