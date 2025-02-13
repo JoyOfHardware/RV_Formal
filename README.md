@@ -1,8 +1,6 @@
 # About
-A formal golden reference model for the POWER 3.0B ISA implemented in 
+An attempt at a formal reference model for the RISC-V ISA written in
 Clash Haskell.
-
-[Link](https://wiki.raptorcs.com/w/images/c/cb/PowerISA_public.v3.0B.pdf) to the POWER 3.0 ISA PDF Spec.
 
 # Getting Started
 This works with ghc 9.4.8
@@ -13,31 +11,20 @@ Note that this repository is currently very much W.I.P. That being said,
 this is how you would currently run a simulation:
 
 ```bash
-cabal run main --ghc-options="-D_RAM_DEPTH=2048" -- --firmware=boot.bin
+cabal run main --ghc-options="-D_RAM_DEPTH=2048" -- --firmware=./rv_tests/hello_world/hello.bin
 ```
 
 # Notes
 All the context that we pick up as we execute an instruction in
 essence forms the context of our micro-op machinery.
 
-## Installing GCC-PPC Toolchain on MacOS
+## Installing GCC-RISC-V Toolchain on [Insert Platform Here]
 
-```bash
-brew install gcc@10 gmp mpfr libmpc
-cd resources
-bash build_gcc.sh
-```
+Change instructions to support Nix
+
 
 # TODO
  - [ ] fetch should invoke mem read function
- - [ ] all caps for form fields
- - [ ] make sliceByField function
- - [ ] getForm :: Opcode -> Form
- - [ ] readRegs :: Form -> [Regs]
- - [ ] check all forms of same class have same start/end bits
- - [ ] Write efficient PO-XO based decoder
-   - all fields will be populated of course!
- - [ ] audit behavior of ffil
 
 # Organization Thoughts
  - Potential functions
@@ -51,15 +38,6 @@ bash build_gcc.sh
 
 # Grant Notes
  - [ ] Some forms may be redundant(may need to remove some)
- - [ ] Some IBM documentation is not precise, for example, there
-       are many Z23 forms, not one.
- - [ ] Some IBM documentation is incorrect, for example, the Z23
-       form of addex is missing from the Z23 form list.
- - create exploratory HTML documentation from Haskell model(perhaps
-       using Elm!!)
-
-## Readability Improvements
-- [ ] Need to improve readability of Haskell Code generators
 
 ## Quality of Life Enhancements
  - [ ] turn off derive generics
@@ -69,15 +47,3 @@ bash build_gcc.sh
  - [ ] learn to use trace and jupyter
  - [ ] draw conclusions on feasibility of debugging
        without VCD viewer
-
-## Binary Dev and Firmware Testing
- - [ ] Write test in Rust ppc baremetal toolchain
-
-# Generating Haskell Opcodes, Forms, Decoder, and Populated Forms
-Some of the Haskell sources are auto-generated using a Python script
-that reads in POWER ISA information in machine format from a CSV.
-
-Run the following to re-generate the auto-generated Haskell sources.
-```bash
-bash gen.sh
-```

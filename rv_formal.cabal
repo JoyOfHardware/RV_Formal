@@ -1,5 +1,5 @@
 cabal-version:       2.4
-name:                ppcFormal
+name:                rvFormal
 version:             0.1
 license:             BSD-2-Clause
 author:              John Smith <john@example.com>
@@ -87,12 +87,7 @@ library
   exposed-modules:
     Simulation
   other-modules:
-    Decode.BitpatsToOpcodes,
     Decode.Opcodes,
-    Decode.Forms,
-    Decode.Fields,
-    Decode.ExtractField,
-    Decode.OpcodeToForm,
     Peripherals.Ram,
     Peripherals.UartCFFI,
     Peripherals.Setup,
@@ -106,21 +101,21 @@ library
   include-dirs: c
   default-language: Haskell2010
 
--- Builds the executable 'clash', with ppcFormal project in scope
+-- Builds the executable 'clash', with rvFormal project in scope
 executable clash
   main-is: bin/Clash.hs
   default-language: Haskell2010
-  Build-Depends: base, clash-ghc, ppcFormal
+  Build-Depends: base, clash-ghc, rvFormal
   if !os(Windows)
     ghc-options: -dynamic
 
--- Builds the executable 'clashi', with ppcFormal project in scope
+-- Builds the executable 'clashi', with rvFormal project in scope
 executable clashi
   main-is: bin/Clashi.hs
   default-language: Haskell2010
   if !os(Windows)
     ghc-options: -dynamic
-  build-depends: base, clash-ghc, ppcFormal
+  build-depends: base, clash-ghc, rvFormal
 
 executable main
   import: common-options
@@ -130,7 +125,7 @@ executable main
   build-depends:
     base,
     clash-ghc,
-    ppcFormal
+    rvFormal
   c-sources: c/uart_sim_device.c
   include-dirs: c
   if !os(Windows)

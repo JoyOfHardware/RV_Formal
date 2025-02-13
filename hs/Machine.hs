@@ -3,51 +3,49 @@
 
 module Machine(
   Machine(..),
-  POWER_CPU(..),
+  RISCVCPU(..),
   Endian(..),
-  getEndian,
   machineInit) where
 
 import Clash.Prelude
 import Types(Pc, Mem)
-import RegFiles(GPR, MSR, gprInit, msrInit)
+import RegFiles(GPR, FPR, CSR, gprInit, fprInit, csrInit)
 
 data Endian = Big | Little
   deriving (Generic, Show, Eq, NFDataX)
 
-data POWER_CPU = POWER_CPU
-  { pc :: Pc,
-    msr :: MSR,
-    gpr :: GPR
-  } 
+data PrivilegeLevel
+  = MachineMode
+  | SuperVisorMode
+  | UserMode
+  deriving (Generic, Show, Eq, NFDataX)
+
+data RISCVCPU = RISCVCPU
+  { pc  :: Pc,
+    gpr :: GPR,
+    fpr :: FPR,
+    privilegeLevel :: PrivilegeLevel
+  }
   deriving (Generic, Show, Eq, NFDataX)
 
 data Machine = Machine
-  { cpu :: POWER_CPU,
+  { cpu :: RISCVCPU,
     mem :: Mem 14
-  } 
+  }
   deriving (Generic, Show, Eq, NFDataX)
 
-
--- | Defined on page 946 of POWER 3.0 ISA
-getEndian :: MSR -> Endian
-getEndian msrVal = 
-  let
-    endianBit = pack msrVal ! 0
-  in
-    if endianBit == 1 then Little else Big
-
-powerCPUInit :: POWER_CPU
-powerCPUInit =
-  POWER_CPU
+riscvCPUInit :: RISCVCPU
+riscvCPUInit =
+  RISCVCPU
     0
-    msrInit
     gprInit
+    fprInit
+    MachineMode
 
 machineInit :: Machine
 machineInit =
   Machine
-    powerCPUInit
+    riscvCPUInit
     memInit
 
 memInit :: Vec 14 (Unsigned 32)
